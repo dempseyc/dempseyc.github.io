@@ -1,5 +1,5 @@
 #world {
-  position: relative;
+  position: absolute;
   background: url("images/land80x80.png");
   background-size: cover;
   width: 800px;
@@ -7,20 +7,29 @@
   margin: 0 auto;
 }
 #atmosphere {
-  position: relative;
+  position: absolute;
   background-blend-mode: color-burn;
   background-color: rgba(110,20,20,0.3);
   width: 800px;
   height: 800px;
+  background-size: cover;
   margin: 0 auto;
+  /*top: 0px;
+  left: 0px;*/
 }
-
+#avatarhandle {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  top: 400;
+  left: 400;
+}
 #avatar {
-  position: relative;
+  position: absolute;
   background: url("images/ship16x16.png");
   background-size: cover;
-  width: 48px;
-  height: 48px;
-  bottom: 400px;
-  left: 250px;
+  width: 160px;
+  height: 160px;
+  top: -80;
+  left: -80;
 }
