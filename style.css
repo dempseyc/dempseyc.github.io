@@ -1,0 +1,26 @@
+#world {
+  position: relative;
+  background: url("images/land80x80.png");
+  background-size: cover;
+  width: 800px;
+  height: 800px;
+  margin: 0 auto;
+}
+#atmosphere {
+  position: relative;
+  background-blend-mode: color-burn;
+  background-color: rgba(110,20,20,0.3);
+  width: 800px;
+  height: 800px;
+  margin: 0 auto;
+}
+
+#avatar {
+  position: relative;
+  background: url("images/ship16x16.png");
+  background-size: cover;
+  width: 48px;
+  height: 48px;
+  bottom: 400px;
+  left: 250px;
+}
