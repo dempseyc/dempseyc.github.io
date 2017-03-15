@@ -36,38 +36,38 @@ let hAVTchangePos = function (x,y) {
 
 hAVTchangePos(A.xTarget,A.yTarget);
 
-// let moveAVT = function(d) {
+let moveAVT = function(d) {
 
-//   switch (d) {
+  switch (d) {
 
-//     case "up":
-//       A.yTarget -= amount;
-//       A.yPos = A.yTarget;
-//       break;
+    case "up":
+      A.yTarget -= amount;
+      A.yPos = A.yTarget;
+      break;
 
-//     case "dn":
-//       A.yTarget += amount;
-//       A.yPos = A.yTarget;
-//       break;
+    case "dn":
+      A.yTarget += amount;
+      A.yPos = A.yTarget;
+      break;
 
-//     case "left":
-//       A.xTarget -= amount;
-//       A.xPos = A.xTarget;
-//       break;
+    case "left":
+      A.xTarget -= amount;
+      A.xPos = A.xTarget;
+      break;
 
-//     case "right":
-//       A.xTarget += amount;
-//       A.xPos = A.xTarget;
-//       break;
+    case "right":
+      A.xTarget += amount;
+      A.xPos = A.xTarget;
+      break;
 
-//   }//end switch
+  }//end switch
 
-//   hAVT.css({
-//     "top": A.yTarget,
-//     "left": A.xTarget
-//   });
+  hAVT.css({
+    "top": A.yTarget,
+    "left": A.xTarget
+  });
 
-// }
+}
 
 
 
@@ -75,10 +75,10 @@ hAVTchangePos(A.xTarget,A.yTarget);
 ///////////WORLD PART//////////////
 
 
-amount = 160;
+amount = 320;
 
 let WRLD = $("#world");
-//let WRLDslide = WRLD; //for now
+let hWRLD = $("#worldhandle"); //for now
 
 let World = {
   xPos: 0,
@@ -87,8 +87,18 @@ let World = {
   slideX: 0,
   name: "planetName",
   jq: WRLD,
-  jqhandle: WRLD //fornow
+  jqhandle: hWRLD //fornow
 };
+
+
+let hWRLDChangePos = function (x,y) {
+  hWRLD.css({
+    "top": World.slideY, //dont let it reach 0
+    "left": World.slideX //dont let it reach 0
+  });
+}
+
+hWRLDChangePos(World.xPos,World.yPos);
 
 let slideWRLD = function(d) {
   console.log(d);
@@ -117,10 +127,12 @@ let slideWRLD = function(d) {
 
   }//end switch
 
-  WRLD.css({
-    "background-position": slideX, slideY,
-  })
 
+  hWRLD.css({
+    "top": World.slideY,
+    "left": World.slideX
+  });
+  //hWRLDChangePos(World.slideX,World.slideY);
 
 }// end slideWRLD
 
@@ -131,7 +143,7 @@ let slideWRLD = function(d) {
 
 $(document).keydown(function(e) {
   //alert(String.fromCharCode(e.keyCode));
-    switch(e) {
+    switch(e.which) {
         case 37: // left
         slideWRLD("right");
         break;
@@ -150,31 +162,33 @@ $(document).keydown(function(e) {
 
         default: return; // exit this handler for other keys
     }//end switch statement
+
     e.preventDefault(); // prevent the default action (scroll / move caret)
+
 });
 
 //////////////KEYCOMMAND FOR AVATAR MOVING
 
-// $(document).keydown(function(e) {
-//   //alert(String.fromCharCode(e.keyCode));
-//     switch(e.which) {
-//         case 37: // left
-//         moveAVT("left");
-//         break;
+$(document).keydown(function(e) {
+  //alert(String.fromCharCode(e.keyCode));
+    switch(e.which) {
+        case 37: // left
+        moveAVT("left");
+        break;
 
-//         case 38: // up
-//         moveAVT("up");
-//         break;
+        case 38: // up
+        moveAVT("up");
+        break;
 
-//         case 39: // right
-//         moveAVT("right");
-//         break;
+        case 39: // right
+        moveAVT("right");
+        break;
 
-//         case 40: // down
-//         moveAVT("dn");
-//         break;
+        case 40: // down
+        moveAVT("dn");
+        break;
 
-//         default: return; // exit this handler for other keys
-//     }//end switch statement
-//     e.preventDefault(); // prevent the default action (scroll / move caret)
-// });
+        default: return; // exit this handler for other keys
+    }//end switch statement
+    e.preventDefault(); // prevent the default action (scroll / move caret)
+});

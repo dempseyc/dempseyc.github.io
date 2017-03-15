@@ -11,8 +11,32 @@ body, html {
   image-rendering:crisp-edges;
   -ms-interpolation-mode:bicubic;
   overflow: hidden;
+  transition-timing-function: ease-out;
 }
 
+#viewscreen {
+  position: static;
+  width: 2500px;
+  height: 2500px;
+  background: transparent;
+  border: 100px solid black;
+  opacity: 0.5;
+  margin: 0 auto;
+
+}
+
+#worldhandle {
+  position: absolute;
+  color: white;
+  border-left: solid 1px red;
+  border-top: solid 1px red;
+  width: 7px;
+  height: 7px;
+  top: 700;
+  left: 400;
+  transition: top 2s, left 2s;
+
+}
 
 
 #world {
@@ -21,12 +45,16 @@ body, html {
   background-size: cover;
   width: 800px;
   height: 800px;
-  margin: 0 auto;
 }
+
+#itemmap {
+  position: absolute;
+}
+
 #atmosphere {
   position: absolute;
   background-blend-mode: color-burn;
-  background-color: rgba(110,20,20,0.3);
+  background-color: rgba(110,20,20,0.7);
   width: 800px;
   height: 800px;
   background-size: cover;
@@ -37,26 +65,26 @@ body, html {
 #avatarhandle {
   position: absolute;
   color: white;
-/*  width: 160px;
-  height: 160px;*/
+  width: 6px;
+  height: 6px;
   border-left: solid 1px blue;
   border-top: solid 1px blue;
   width: 7px;
   height: 7px;
-  top: 400;
+  top: 700;
   left: 400;
   transition: top 2s, left 2s;
 }
 #avatar {
   position: absolute;
-  background: url("images/ship16x16_2.png");
+  background: url("images/ship16x16_3.png");
   background-size: cover;
-/*  background-position: -80px -80px;*/
+  background-blend-mode: multiply;
   width:  160px;
   height: 160px;
 
   right:  -80px;
-  bottom: -30px;
+  bottom: -50px;
 
-  opacity: 1;
+  opacity: .7;
 }
