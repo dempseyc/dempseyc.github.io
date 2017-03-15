@@ -59,13 +59,9 @@ let A = {
   MapLatTarget:0
 };
 
-let AinitX = World.width;
-let AinitY = World.height;
+let AinitX = World.width*1.5 + 25;
+let AinitY = World.height *1.5 - 25;
 
-let PXLs = 50;
-
-AinitX += PXLs;
-AinitX += PXLs;
 
 let hAVTchangePos = function (x,y) {
   hAVT.css({
