@@ -11,19 +11,11 @@ body, html {
   image-rendering:crisp-edges;
   -ms-interpolation-mode:bicubic;
   overflow: hidden;
-  transition-timing-function: ease-out;
+  transition-timing-function: linear;
 }
 
-#viewscreen {
-  position: static;
-  width: 2500px;
-  height: 2500px;
-  background: transparent;
-  border: 100px solid black;
-  opacity: 0.5;
-  margin: 0 auto;
+  /*copied from duckhunt*/
 
-}
 
 #worldhandle {
   position: absolute;
@@ -34,10 +26,9 @@ body, html {
   height: 7px;
   top: 700;
   left: 400;
-  transition: top 2s, left 2s;
+  transition: top 1s, left 1s;
 
 }
-
 
 #world {
   position: absolute;
@@ -62,6 +53,18 @@ body, html {
   /*top: 0px;
   left: 0px;*/
 }
+
+#viewscreen {
+  position: absolute;
+  width: 480px; /*size of map is 480px*/
+  height: 480px;
+  background: transparent;
+  border: 5px solid white;
+  opacity: 0.5;
+  top: 160px;
+  left: 160px;
+}
+
 #avatarhandle {
   position: absolute;
   color: white;
@@ -73,7 +76,7 @@ body, html {
   height: 7px;
   top: 700;
   left: 400;
-  transition: top 2s, left 2s;
+  transition: top 1s, left 1s;
 }
 #avatar {
   position: absolute;
@@ -82,9 +85,7 @@ body, html {
   background-blend-mode: multiply;
   width:  160px;
   height: 160px;
-
   right:  -80px;
   bottom: -50px;
-
   opacity: .7;
 }

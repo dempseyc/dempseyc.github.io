@@ -17,24 +17,29 @@ let hAVT = $("#avatarhandle");
 
 let A = {
   xPos: 400,
-  yPos: 400,
-  yTarget: 500,
-  xTarget: 400,
+  yPos: 500,
   name: "playerName",
   jq: AVT,
-  handle: hAVT
+  handle: hAVT,
+  MapLong: 0,
+  MapLat: 0
 };
+//update mapLong and MapLat every .5 secs
+//put some global timers in, .1 secs for class change css animations
+//1sec for transitions
+//UI is immediate action
+
 
 let amount = 160;
 
 let hAVTchangePos = function (x,y) {
   hAVT.css({
-    "top": A.yTarget, //dont let it reach 0
-    "left": A.xTarget //dont let it reach 0
+    "top": A.yPos, //dont let it reach 0
+    "left": A.xPos //dont let it reach 0
   });
 }
 
-hAVTchangePos(A.xTarget,A.yTarget);
+hAVTchangePos(A.xPos,A.yPos);
 
 // let moveAVT = function(d) {
 

@@ -1,90 +1,67 @@
+// take objects out and put them on an earlier script
+// let player have an x location and a y location and an x target and a y
+// target, but rather than an xpos and ypos, just have a map and locate the player
+//  on a longitude and latitude. the game state changing functions while display
+//  changing functions only take arguments from map and player state
+// location function calls, target, property, class attribute, etc. and logic
+// tells CSS and DOM what to change. CSS does the animation, coloring, skin,
+// styling, etc.
+// the maps and game logic will display CSS position transitions and turning off and on the transitions
+// halfway through the 1s resetting CSS to appear to loop, resetting the display of tokens on the item map....  player marking to the map will always pass his location to a function that changes itemmap state and updates game area.  change item to token
 
 
+//////////////////AVATAR MOVING TO Inital State
 
 
-
-
-//////////////////AVATAR MOVING AREA
-
-
-
-
-
+//jqueryselections
 let AVT = $("#avatar");
-
-//two jquery selection
 let hAVT = $("#avatarhandle");
 
+//if avt is stationary, only game response animations applied to these like sensor going off, getting a message, banking, hovering, blinking, whatever.  Let A have all the properties of location, items collected, etc.  easy to add features like money or board timeout or whatever logic
+
 let A = {
+  name: "playerName" ,
+  jq: AVT ,
+  handle: hAVT ,
+  SHHimageURL: "images/PNGavS.png" ,
+  TKNimageURL: "images/PNGavT.png" ,
+  BLNKimageRL: "images/PNGavB.png" ,
   xPos: 400,
-  yPos: 400,
-  yTarget: 500,
-  xTarget: 400,
-  name: "playerName",
-  jq: AVT,
-  handle: hAVT
+  yPos: 500,
+  MapLong: 0,
+  MapLat: 0,
+  MapLngTarget:0,
+  MapLatTarget:0
 };
 
-let amount = 160;
+//update MapLong MapLat MapLngTarget, MapLatTarget every .5 secs
+//put some global timers in, .1 secs for class change css sprite animations
+//with changing background-position
+//1sec for transitions
+//UI is immediate action
+//do i want to make map long target a percentage of the div?
+//if i have velocity, i can change target
 
 let hAVTchangePos = function (x,y) {
   hAVT.css({
-    "top": A.yTarget, //dont let it reach 0
-    "left": A.xTarget //dont let it reach 0
+    "top": A.yPos, //dont let it reach 0
+    "left": A.xPos //dont let it reach 0
   });
 }
 
 hAVTchangePos(A.xTarget,A.yTarget);
 
-let moveAVT = function(d) {
-
-  switch (d) {
-
-    case "up":
-      A.yTarget -= amount;
-      A.yPos = A.yTarget;
-      break;
-
-    case "dn":
-      A.yTarget += amount;
-      A.yPos = A.yTarget;
-      break;
-
-    case "left":
-      A.xTarget -= amount;
-      A.xPos = A.xTarget;
-      break;
-
-    case "right":
-      A.xTarget += amount;
-      A.xPos = A.xTarget;
-      break;
-
-  }//end switch
-
-  hAVT.css({
-    "top": A.yTarget,
-    "left": A.xTarget
-  });
-
-}
-
-
-
-
-///////////WORLD PART//////////////
-
-
-amount = 320;
 
 let WRLD = $("#world");
-let hWRLD = $("#worldhandle"); //for now
+let hWRLD = $("#worldhandle");
+
+let moveAmount = 160;
 
 let World = {
   xPos: 0,
   yPos: 0,
-  slideY: 0,
-  slideX: 0,
+  slideV: 0,
+  slideH: 0,
   name: "planetName",
   jq: WRLD,
   jqhandle: hWRLD //fornow
@@ -93,8 +70,8 @@ let World = {
 
 let hWRLDChangePos = function (x,y) {
   hWRLD.css({
-    "top": World.slideY, //dont let it reach 0
-    "left": World.slideX //dont let it reach 0
+    "top": World.slideV, //dont let it reach 0
+    "left": World.slideH //dont let it reach 0
   });
 }
 
@@ -106,33 +83,33 @@ let slideWRLD = function(d) {
   switch (d) {
 
     case "up":
-      World.slideY -= amount;
-      World.yPos = World.slideY;
+      World.slideV -= moveAmount;
+      World.yPos = World.slideV;
       break;
 
     case "dn":
-      World.slideY += amount;
-      World.yPos = World.slideY;
+      World.slideV += moveAmount;
+      World.yPos = World.slideV;
       break;
 
     case "left":
-      World.slideX -= amount;
-      World.xPos = World.slideX;
+      World.slideH -= moveAmount;
+      World.xPos = World.slideH;
       break;
 
     case "right":
-      World.slideX += amount;
-      World.xPos = World.slideX;
+      World.slideH += moveAmount;
+      World.xPos = World.slideH;
       break;
 
   }//end switch
 
 
   hWRLD.css({
-    "top": World.slideY,
-    "left": World.slideX
+    "top": World.slideV,
+    "left": World.slideH
   });
-  //hWRLDChangePos(World.slideX,World.slideY);
+  //hWRLDChangePos(World.slideH,World.slideV);
 
 }// end slideWRLD
 
@@ -144,19 +121,19 @@ let slideWRLD = function(d) {
 $(document).keydown(function(e) {
   //alert(String.fromCharCode(e.keyCode));
     switch(e.which) {
-        case 37: // left
+        case 37: // left arrow
         slideWRLD("right");
         break;
 
-        case 38: // up
+        case 38: // up arrow
         slideWRLD("dn");
         break;
 
-        case 39: // right
+        case 39: // right arrow
         slideWRLD("left");
         break;
 
-        case 40: // down
+        case 40: // down arrow
         slideWRLD("up");
         break;
 
@@ -167,28 +144,4 @@ $(document).keydown(function(e) {
 
 });
 
-//////////////KEYCOMMAND FOR AVATAR MOVING
 
-$(document).keydown(function(e) {
-  //alert(String.fromCharCode(e.keyCode));
-    switch(e.which) {
-        case 37: // left
-        moveAVT("left");
-        break;
-
-        case 38: // up
-        moveAVT("up");
-        break;
-
-        case 39: // right
-        moveAVT("right");
-        break;
-
-        case 40: // down
-        moveAVT("dn");
-        break;
-
-        default: return; // exit this handler for other keys
-    }//end switch statement
-    e.preventDefault(); // prevent the default action (scroll / move caret)
-});

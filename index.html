@@ -1,26 +1,43 @@
-<!DOCTYPE html>
+<!DOCTYPE html>  <!--  cool style notes: spaces around classes, notice, other attributes have spaces only after assignment operator and between values  -->
 <html>
 <head>
   <title>MiniRPG</title>
-  <link rel= "stylesheet"  type= "text/css" href= "reset.css">
-  <link rel= "stylesheet"  type= "text/css" href= "style.css">
+  <link rel= "stylesheet" type= "text/css" href= "reset.css">
+  <link rel= "stylesheet" type= "text/css" href= "style.css">
 </head>
   <body>
-        <div id= "worldhandle" class= "handle">
-          <div id= "world">
-          </div>
-          <div id= "atmosphere">
-          </div>
-          <div id= "itemmap">
-          </div>
-          <div id= "avatarhandle" class= "handle">
-            <div id= "avatar">
-            </div>
-          </div>
-        </div>
-          <div id= "viewscreen">
-          </div>
+
+
+    <div id= "worldhandle" class= " handle ">
+
+      <div id= "world">
+      </div>
+      <div id= "itemmap">
+      </div>
+      <div id= "atmosphere">
+      </div>
+
+    </div>  <!-- close worldhandle div -->
+
+    <div id= "viewscreen">
+    </div>  <!-- close viewscreen div -->
+
+    <div id= "avatarhandle" class= " handle ">
+      <div id= "avatarshadow" class= " shadow "></div>
+      <div id= "avatar" class= " hover wobble "></div>
+    </div>  <!-- close avatar handle div -->
+
+
+
+
+
     <script src= "jquery-1.11.3.js"></script>
-    <<script src= "scripttest2.js"></script>
+    <script src= "scripttest2.js"></script>
   </body>
 </html>
+
+<!-- X      @X   XXX X    @X   X   X X -->
+<!-- X X     X  XXXX X     X X X X X X -->
+<!-- X     X X  XXXX XXXX    XXX XXXXX -->
+<!-- - - - - - #A * 3 * #3 - - - - - - -->
+
