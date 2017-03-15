@@ -24,8 +24,8 @@ body, html {
   border-top: solid 1px red;
   width: 7px;
   height: 7px;
-  top: 700;
-  left: 400;
+/*  top: 700;
+  left: 400;*/
   transition: top 1s, left 1s;
 
 }
@@ -34,8 +34,8 @@ body, html {
   position: absolute;
   background: url("images/land80x80.png");
   background-size: cover;
-  width: 800px;
-  height: 800px;
+  width: 250px;
+  height: 250px;
 }
 
 #itemmap {
@@ -46,23 +46,23 @@ body, html {
   position: absolute;
   background-blend-mode: color-burn;
   background-color: rgba(110,20,20,0.7);
-  width: 800px;
-  height: 800px;
+  width: 250px;
+  height: 250px;
   background-size: cover;
-  margin: 0 auto;
+/*  margin: 0 auto;*/
   /*top: 0px;
   left: 0px;*/
 }
 
-#viewscreen {
+#mask {
   position: absolute;
-  width: 480px; /*size of map is 480px*/
-  height: 480px;
+  width: 200px; /*size of map is 480px*/
+  height: 200px;
   background: transparent;
-  border: 5px solid white;
+  border: 50px solid white;
   opacity: 0.5;
-  top: 160px;
-  left: 160px;
+  top: -25px;
+  left: -25px;
 }
 
 #avatarhandle {
@@ -74,18 +74,28 @@ body, html {
   border-top: solid 1px blue;
   width: 7px;
   height: 7px;
-  top: 700;
-  left: 400;
+/*  top: 700;
+  left: 400;*/
   transition: top 1s, left 1s;
+}
+#avatarshadow {
+  position: absolute;
+  background: url("images/shipShadow50x50.png");
+  background-size: cover;
+  background-blend-mode: multiply;
+  width:  50px;
+  height: 50px;
+  right:  -20px;
+  bottom: -10px;
+  opacity: .4;
 }
 #avatar {
   position: absolute;
-  background: url("images/ship16x16_3.png");
+  background: url("images/shipToken50x100.png");
   background-size: cover;
-  background-blend-mode: multiply;
-  width:  160px;
-  height: 160px;
-  right:  -80px;
-  bottom: -50px;
-  opacity: .7;
+  width:  50px;
+  height: 100px;
+  right:  -15px;
+  bottom: 0px;
+  opacity: .8;
 }

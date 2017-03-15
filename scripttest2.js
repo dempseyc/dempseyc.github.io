@@ -9,6 +9,27 @@
 // the maps and game logic will display CSS position transitions and turning off and on the transitions
 // halfway through the 1s resetting CSS to appear to loop, resetting the display of tokens on the item map....  player marking to the map will always pass his location to a function that changes itemmap state and updates game area.  change item to token
 
+//////////////////INIT WORLD
+
+let WRLD = $("#world");
+let hWRLD = $("#worldhandle");
+
+let blockSize = 50;
+let moveAmount = blockSize;
+
+let World = {
+  size: 3,
+  width: 150,//this.size*blockSize, //150
+  height: 150,//this.size*blockSize, //150
+  imageSize: 250,//this.size*blockSize+blockSize*2, //250
+  xPos: 0,
+  yPos: 0,
+  slideV: 0,
+  slideH: 0,
+  name: "planetName",
+  jq: WRLD,
+  jqhandle: hWRLD
+};
 
 //////////////////AVATAR MOVING TO Inital State
 
@@ -19,6 +40,9 @@ let hAVT = $("#avatarhandle");
 
 //if avt is stationary, only game response animations applied to these like sensor going off, getting a message, banking, hovering, blinking, whatever.  Let A have all the properties of location, items collected, etc.  easy to add features like money or board timeout or whatever logic
 
+let AinitX = World.width/2;
+let AinitY = World.height/2;
+
 let A = {
   name: "playerName" ,
   jq: AVT ,
@@ -26,8 +50,8 @@ let A = {
   SHHimageURL: "images/PNGavS.png" ,
   TKNimageURL: "images/PNGavT.png" ,
   BLNKimageRL: "images/PNGavB.png" ,
-  xPos: 400,
-  yPos: 500,
+  xPos: 0,
+  yPos: 0,
   MapLong: 0,
   MapLat: 0,
   MapLngTarget:0,
@@ -44,34 +68,17 @@ let A = {
 
 let hAVTchangePos = function (x,y) {
   hAVT.css({
-    "top": A.yPos, //dont let it reach 0
-    "left": A.xPos //dont let it reach 0
+    "left": x,
+    "top": y
   });
 }
 
-hAVTchangePos(A.xTarget,A.yTarget);
-
-
-let WRLD = $("#world");
-let hWRLD = $("#worldhandle");
-
-let moveAmount = 160;
-
-let World = {
-  xPos: 0,
-  yPos: 0,
-  slideV: 0,
-  slideH: 0,
-  name: "planetName",
-  jq: WRLD,
-  jqhandle: hWRLD //fornow
-};
-
+hAVTchangePos(AinitX,AinitY);
 
 let hWRLDChangePos = function (x,y) {
   hWRLD.css({
-    "top": World.slideV, //dont let it reach 0
-    "left": World.slideH //dont let it reach 0
+    "left": x,
+    "top": y
   });
 }
 
@@ -105,11 +112,11 @@ let slideWRLD = function(d) {
   }//end switch
 
 
-  hWRLD.css({
-    "top": World.slideV,
-    "left": World.slideH
-  });
-  //hWRLDChangePos(World.slideH,World.slideV);
+  // hWRLD.css({
+  //   "top": World.slideV,
+  //   "left": World.slideH
+  // });
+  hWRLDChangePos(World.slideH,World.slideV);
 
 }// end slideWRLD
 
