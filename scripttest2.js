@@ -7,7 +7,8 @@
 // tells CSS and DOM what to change. CSS does the animation, coloring, skin,
 // styling, etc.
 // the maps and game logic will display CSS position transitions and turning off and on the transitions
-// halfway through the 1s resetting CSS to appear to loop, resetting the display of tokens on the item map....  player marking to the map will always pass his location to a function that changes itemmap state and updates game area.  change item to token
+// for looping map:
+// halfway through the 1s resetting CSS to appear to loop, resetting the display of tokens on the item map....  player marking to the map will always pass his location to a function that changes tokenmap state and updates game area.
 
 //////////////////INIT WORLD
 
@@ -17,15 +18,18 @@ let hWRLD = $("#worldhandle");
 let blockSize = 50;
 let moveAmount = blockSize;
 
+
+//   divide by size times size +2   //////////BAAD PLAANET!!
+
 let World = {
   size: 3,
-  width: 175,//this.size*blockSize + maskborder/2, //150
-  height: 175,//this.size*blockSize, //150
+  width: 150,//this.size*blockSize + maskborder/2, //150
+  height: 150,//this.size*blockSize, //150
   imageSize: 250,//this.size*blockSize+blockSize*2 + maskborder/2, //250
-  xPos: 25,//this.width+(blockSize/2),
-  yPos: 25, //this.width+(blockSize/2)+blockSize,
-  slideV: 0,
-  slideH: 0,
+  xPos: 0,//this.width+(blockSize/2),
+  yPos: 0, //this.width+(blockSize/2)+blockSize,
+  slideV: 0,  //initial position
+  slideH: 0,  //initial position
   name: "planetName",
   jq: WRLD,
   jqhandle: hWRLD
@@ -40,9 +44,6 @@ let hAVT = $("#avatarhandle");
 
 //if avt is stationary, only game response animations applied to these like sensor going off, getting a message, banking, hovering, blinking, whatever.  Let A have all the properties of location, items collected, etc.  easy to add features like money or board timeout or whatever logic
 
-let AinitX = World.width+50;
-let AinitY = World.height+blockSize+50;
-
 let A = {
   name: "playerName" ,
   jq: AVT ,
@@ -50,21 +51,21 @@ let A = {
   SHHimageURL: "images/PNGavS.png" ,
   TKNimageURL: "images/PNGavT.png" ,
   BLNKimageRL: "images/PNGavB.png" ,
-  xPos: 125,
-  yPos: 175,
+  xPos: World.width,
+  yPos: World.height,
   MapLong: 0,
   MapLat: 0,
   MapLngTarget:0,
   MapLatTarget:0
 };
 
-//update MapLong MapLat MapLngTarget, MapLatTarget every .5 secs
-//put some global timers in, .1 secs for class change css sprite animations
-//with changing background-position
-//1sec for transitions
-//UI is immediate action
-//do i want to make map long target a percentage of the div?
-//if i have velocity, i can change target
+let AinitX = World.width;
+let AinitY = World.height;
+
+let PXLs = 50;
+
+AinitX += PXLs;
+AinitX += PXLs;
 
 let hAVTchangePos = function (x,y) {
   hAVT.css({
@@ -74,6 +75,14 @@ let hAVTchangePos = function (x,y) {
 }
 
 hAVTchangePos(AinitX,AinitY);
+
+//update MapLong MapLat MapLngTarget, MapLatTarget every .5 secs
+//put some global timers in, .1 secs for class change css sprite animations
+//with changing background-position
+//1sec for transitions
+//UI is immediate action
+//do i want to make map long target a percentage of the div?
+//if i have velocity, i can change target
 
 let hWRLDChangePos = function (x,y) {
   hWRLD.css({

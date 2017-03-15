@@ -29,8 +29,8 @@ body, html {
   position: absolute;
   background: url("images/land80x80.png");
   background-size: cover;
-  width: 375px;
-  height: 375px;
+  width: 400px;
+  height: 400px;
 }
 
 #itemmap {
@@ -38,8 +38,8 @@ body, html {
   background-color: rgba();
   position: absolute;
   border: solid 2px white;
-  width: 375px;
-  height: 375px;
+  width: 400px;
+  height: 400px;
   top: -1;
   left: -1;
 }
@@ -48,8 +48,8 @@ body, html {
   position: absolute;
   background-blend-mode: color-burn;
   background-color: rgba(110,20,20,0.7);
-  width: 375px;
-  height: 375px;
+  width: 400px;
+  height: 400px;
   background-size: cover;
 }
 
