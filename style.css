@@ -4,18 +4,14 @@ body, html {
   background: black;
   background-size: cover;
   background-position: center;
-  image-rendering:optimizeSpeed;
-  image-rendering:-moz-crisp-edges;
-  image-rendering:-o-crisp-edges;
-  image-rendering:-webkit-optimize-contrast;
-  image-rendering:crisp-edges;
-  -ms-interpolation-mode:bicubic;
   overflow: hidden;
-  transition-timing-function: linear;
 }
 
-  /*copied from duckhunt*/
-
+.trans {
+  transition-timing-function: linear;
+  transition: top 1s, left 1s;
+  /*worldhandle */
+}
 
 #worldhandle {
   position: absolute;
@@ -24,9 +20,8 @@ body, html {
   border-top: solid 1px red;
   width: 7px;
   height: 7px;
-/*  top: 700;
-  left: 400;*/
-  transition: top 1s, left 1s;
+  top: 50;
+  left: 50;
 
 }
 
@@ -34,36 +29,30 @@ body, html {
   position: absolute;
   background: url("images/land80x80.png");
   background-size: cover;
-  width: 250px;
-  height: 250px;
+  width: 375px;
+  height: 375px;
 }
 
 #itemmap {
+  opacity: 0.5;
+  background-color: rgba();
   position: absolute;
+  border: solid 2px white;
+  width: 375px;
+  height: 375px;
+  top: -1;
+  left: -1;
 }
 
 #atmosphere {
   position: absolute;
   background-blend-mode: color-burn;
   background-color: rgba(110,20,20,0.7);
-  width: 250px;
-  height: 250px;
+  width: 375px;
+  height: 375px;
   background-size: cover;
-/*  margin: 0 auto;*/
-  /*top: 0px;
-  left: 0px;*/
 }
 
-#mask {
-  position: absolute;
-  width: 200px; /*size of map is 480px*/
-  height: 200px;
-  background: transparent;
-  border: 50px solid white;
-  opacity: 0.5;
-  top: -25px;
-  left: -25px;
-}
 
 #avatarhandle {
   position: absolute;
@@ -74,8 +63,6 @@ body, html {
   border-top: solid 1px blue;
   width: 7px;
   height: 7px;
-/*  top: 700;
-  left: 400;*/
   transition: top 1s, left 1s;
 }
 #avatarshadow {

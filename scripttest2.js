@@ -19,11 +19,11 @@ let moveAmount = blockSize;
 
 let World = {
   size: 3,
-  width: 150,//this.size*blockSize, //150
-  height: 150,//this.size*blockSize, //150
-  imageSize: 250,//this.size*blockSize+blockSize*2, //250
-  xPos: 0,
-  yPos: 0,
+  width: 175,//this.size*blockSize + maskborder/2, //150
+  height: 175,//this.size*blockSize, //150
+  imageSize: 250,//this.size*blockSize+blockSize*2 + maskborder/2, //250
+  xPos: 25,//this.width+(blockSize/2),
+  yPos: 25, //this.width+(blockSize/2)+blockSize,
   slideV: 0,
   slideH: 0,
   name: "planetName",
@@ -40,8 +40,8 @@ let hAVT = $("#avatarhandle");
 
 //if avt is stationary, only game response animations applied to these like sensor going off, getting a message, banking, hovering, blinking, whatever.  Let A have all the properties of location, items collected, etc.  easy to add features like money or board timeout or whatever logic
 
-let AinitX = World.width/2;
-let AinitY = World.height/2;
+let AinitX = World.width+50;
+let AinitY = World.height+blockSize+50;
 
 let A = {
   name: "playerName" ,
@@ -50,8 +50,8 @@ let A = {
   SHHimageURL: "images/PNGavS.png" ,
   TKNimageURL: "images/PNGavT.png" ,
   BLNKimageRL: "images/PNGavB.png" ,
-  xPos: 0,
-  yPos: 0,
+  xPos: 125,
+  yPos: 175,
   MapLong: 0,
   MapLat: 0,
   MapLngTarget:0,
