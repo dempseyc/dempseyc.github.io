@@ -22,9 +22,9 @@ body, html {
   background: transparent;
   width: 500px;
   height: 500px;
-  border: 375px solid white;
-  top: -350px;   /*  25 - 375  */
-  left: -350px;  /*add back in the offset you want to minus the bordersize*/
+  border: 525px solid black;
+  top: -500px;   /*  25 - 375  */
+  left: -500px;  /*add back in the offset 25 you want to minus the bordersize*/
 }
 
 #qcom {
@@ -44,7 +44,7 @@ body, html {
   width: 248px;
   height: 498px;
   top: 25px;
-  right: 50px;
+  right: 25px;
   /*in this case a 5 by 10 set of 50x50 divs item class*/
 }
 
@@ -58,9 +58,9 @@ body, html {
 
 #whoffset {
   position: absolute;
-  /*should be dynamic with imagesize of world*/
-  top: -250px;
-  left: -250px;
+  /*position should be scripted by imagesize of world*/
+  top: -225px;
+  left: -225px;
 }
 
 #worldhandle {
@@ -108,11 +108,8 @@ body, html {
   /*  is that really necessary to do rotations and whatnot?  */
   position: absolute;
   /*should be dynamic with imagesize of world*/
-  top: 300px;
-  left: 250px;
-
-
-
+  top: 400px;
+  left: 275px;
 }
 
 #avatarhandle {
@@ -145,8 +142,8 @@ body, html {
 }
 
 .trans {
-  /*transition-timing-function: linear;*/
-  /*transition: top 1s, left 1s;*/
+/*  transition-timing-function: linear;
+  transition: top 1s, left 1s;*/
   /*worldhandle */
 }
 
