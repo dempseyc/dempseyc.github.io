@@ -34,6 +34,12 @@ body, html {
   width: 500px;
   top: 525px;
   left: 25px;
+
+}
+
+#qcom p {
+  line-height: 40px;
+  color: yellow;
 }
 
 #panel {
