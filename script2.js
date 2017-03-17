@@ -1,3 +1,6 @@
+//initializing board
+//
+
 let B = {
   mapSize: 10,
   worldArray: [],
@@ -39,16 +42,10 @@ let WRLD = $("#world");
 let hWRLD = $("#worldhandle");
 
 let blockSize = 50;
-let moveAmount = blockSize/10;
+let moveAmount = blockSize; ///10;
 
-//   divide by size times size +2   //////////BAAD PLAANET!!
-
-let View = {
-  // deccribe layout of page within body
-}
-
-//////////////////AVATAR MOVING TO Inital State
-
+//initializing avatar
+//
 
 //jqueryselections
 let AVT = $("#avatar");
@@ -84,13 +81,12 @@ let hAVTchangePos = function (x,y) {
 
 hAVTchangePos(AinitX,AinitY);
 
-//update MapLong MapLat MapLngTarget, MapLatTarget every .5 secs
-//put some global timers in, .1 secs for class change css sprite animations
+//put some global timers in,
+// 0.1 secs for avatar movement and css class changes
+// 0.5 secs for gamestate logic update
+// immediate dom append and remove manipulation and user feedback
 //with changing background-position
-//1sec for transitions
-//UI is immediate action
-//do i want to make map long target a percentage of the div?
-//if i have velocity, i can change target
+
 
 let hWRLDChangePos = function (x,y) {
   hWRLD.css({
@@ -101,15 +97,6 @@ let hWRLDChangePos = function (x,y) {
 
 hWRLDChangePos(B.xPos,B.yPos);
 
-let loopWRLD = function(d) {
-
-  // switch (d) {
-  //   case "up":
-  //     WRLD.css("background-position", "0px -150px");
-  //   case "dn":
-  //     WRLD.css("background-position", "0px 150px");
-  // }
-}
 
 let slideWRLD = function(d) {
   console.log(d);
@@ -148,8 +135,6 @@ let slideWRLD = function(d) {
         B.slideH += 500;  //size of planetmap
       }
 
-
-
       B.xPos = B.slideH;
       break;
 
@@ -160,8 +145,6 @@ let slideWRLD = function(d) {
       if (B.slideH>250) {
         B.slideH -= 500;  //size of planetmap
       }
-
-
 
       B.xPos = B.slideH;
       break;
@@ -196,6 +179,12 @@ $(document).keydown(function(e) {
         case 40: // down arrow
         slideWRLD("up");
         break;
+
+        //need behavior for "/" or "X" key/
+        //if A has no token selected, pick up token
+        //if A has token selected, drop token
+        //if A has no token selected, and no token to pick up,
+        //enter select token mode, and the arrow keys now have totally different behavior
 
         default: return; // exit this handler for other keys
     }//end switch statement
