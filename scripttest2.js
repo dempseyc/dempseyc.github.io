@@ -55,8 +55,8 @@ let A = {
   // SHHimageURL: "images/PNGavS.png" ,
   // TKNimageURL: "images/PNGavT.png" ,
   // BLNKimageRL: "images/PNGavB.png" ,
-  xPos: 0-World.width/2,
-  yPos: 0-World.height/2+blockSize,
+  xPos: 0,
+  yPos: 0,
   MapLong: 0,
   MapLat: 0,
   MapLngTarget:0,
@@ -110,12 +110,12 @@ let slideWRLD = function(d) {
 
     case "up":
       World.slideV -= moveAmount;
-      console.log("slideV "+World.slideV);
+      //console.log("slideV "+World.slideV);
       //conditional here for
       //looping behavior with .5 sec timeout
       //store xpos, ypos, slide amt
-      if (World.slideV<0) {
-        World.slideV += 200;
+      if (World.slideV<-250) {
+        World.slideV += 500;  //size of planetmap
       }
 
       World.yPos = World.slideV;
@@ -123,20 +123,22 @@ let slideWRLD = function(d) {
 
     case "dn":
       World.slideV += moveAmount;
-      console.log("slideV "+World.slideV);
+      //console.log("slideV "+World.slideV);
 
-      // if (World.slideV>=0) {
-      //   loopWRLD(d);
-      // }
+      if (World.slideV>250) {
+        World.slideV -= 500;  //size of planetmap
+      }
 
       World.yPos = World.slideV;
       break;
 
     case "left":
       World.slideH -= moveAmount;
-      console.log("slideH "+World.slideH);
+      // console.log("slideH "+World.slideH);
 
-
+      if (World.slideH<-250) {
+        World.slideH += 500;  //size of planetmap
+      }
 
 
 
@@ -145,9 +147,11 @@ let slideWRLD = function(d) {
 
     case "right":
       World.slideH += moveAmount;
-      console.log("slideH "+World.slideH);
+      // console.log("slideH "+World.slideH);
 
-
+      if (World.slideH>250) {
+        World.slideH -= 500;  //size of planetmap
+      }
 
 
 
