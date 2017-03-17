@@ -7,56 +7,104 @@ body, html {
   overflow: hidden;
 }
 
-.trans {
-  transition-timing-function: linear;
-  transition: top 1s, left 1s;
-  /*worldhandle */
+#displayarea {
+  position: relative;
+  background: grey;
+  width: 900px;
+  height: 700px;
+  opacity: 0.8;
+  top: 75px;
+  left: 50px;
+}
+
+#mask {
+  position: absolute;
+  background: transparent;
+  width: 500px;
+  height: 500px;
+  border: 375px solid white;
+  top: -350px;   /*  25 - 375  */
+  left: -350px;  /*add back in the offset you want to minus the bordersize*/
+}
+
+#qcom {
+  position: absolute;
+  background: blue;
+  height: 75px;
+  width: 500px;
+  top: 525px;
+  left: 25px;
+}
+
+#panel {
+  position: absolute;
+  display: table;
+  background: #333;
+  width: 250px;
+  height: 500px;
+  top: 50px;
+  right: 50px;
+  /*in this case a 5 by 10 set of 50x50 divs item class*/
+}
+
+.item {
+  /*position: absolute;*/
+  display: table-cell;
+  border: 2px solid orange;
+  height: 46px;
+  width: 46px;
+}
+
+#whoffset {
+  position: absolute;
+  /*should be dynamic with imagesize of world*/
+  top: -250px;
+  left: -250px;
 }
 
 #worldhandle {
   position: absolute;
-  color: white;
+  background-color: white;
   border-left: solid 1px red;
   border-top: solid 1px red;
   width: 7px;
   height: 7px;
-  top: 50;
-  left: 50;
-
 }
 
 #world {
   position: absolute;
-  background: url("images/land_00_250x250sillouette.png");
+  background: url("images/land500x2.png");
+  width: 1000px;
+  height: 1000px;
   background-size: cover;
-  width: 400px;
-  height: 400px;
 }
 
 #itemmap {
   opacity: 0.5;
   background-color: rgba();
+  background-size: cover;
   position: absolute;
   border: solid 2px white;
-  width: 400px;
-  height: 400px;
+  width: 1000px;
+  height: 1000px;
   top: -1;
   left: -1;
+  /*should be associated with an array of planetmapsize*2/blocksize*/
 }
 
 #atmosphere {
   position: absolute;
   background-blend-mode: color-burn;
   background-color: rgba(110,20,20,0.7);
-  width: 400px;
-  height: 400px;
+  width: 1000px;
+  height: 1000px;
   background-size: cover;
 }
 
 
 #avatarhandle {
   position: absolute;
-  color: white;
+  background-color: transparent;
   border-left: solid 1px blue;
   border-top: solid 1px blue;
   width: 7px;
@@ -67,12 +115,10 @@ body, html {
   position: absolute;
   background: url("images/shipShadow50x50.png");
   background-size: cover;
-  background-blend-mode: multiply;
   width:  50px;
   height: 50px;
   right:  -20px;
   bottom: -10px;
-  opacity: .4;
 }
 #avatar {
   position: absolute;
@@ -83,4 +129,15 @@ body, html {
   right:  -15px;
   bottom: 0px;
   opacity: .8;
+}
+
+.trans {
+  /*transition-timing-function: linear;*/
+  /*transition: top 1s, left 1s;*/
+  /*worldhandle */
+}
+
+.shadow {
+  opacity: 0.4;
+  background-blend-mode: multiply;
 }

@@ -21,11 +21,15 @@ let moveAmount = blockSize;
 
 //   divide by size times size +2   //////////BAAD PLAANET!!
 
+let View = {
+  // deccribe layout of page within body
+}
+
 let World = {
   size: 3,
-  width: 150,//this.size*blockSize + maskborder/2, //150
-  height: 150,//this.size*blockSize, //150
-  imageSize: 250,//this.size*blockSize+blockSize*2 + maskborder/2, //250
+  width: 500,//this.size*blockSize + maskborder/2, //150
+  height: 500,//this.size*blockSize, //150
+  imageSize: 1000,//this.size*blockSize+blockSize*2 + maskborder/2, //250
   xPos: 0,//this.width+(blockSize/2),
   yPos: 0, //this.width+(blockSize/2)+blockSize,
   slideV: 0,  //initial position
@@ -48,19 +52,19 @@ let A = {
   name: "playerName" ,
   jq: AVT ,
   handle: hAVT ,
-  SHHimageURL: "images/PNGavS.png" ,
-  TKNimageURL: "images/PNGavT.png" ,
-  BLNKimageRL: "images/PNGavB.png" ,
-  xPos: World.width,
-  yPos: World.height,
+  // SHHimageURL: "images/PNGavS.png" ,
+  // TKNimageURL: "images/PNGavT.png" ,
+  // BLNKimageRL: "images/PNGavB.png" ,
+  xPos: 0-World.width/2,
+  yPos: 0-World.height/2+blockSize,
   MapLong: 0,
   MapLat: 0,
   MapLngTarget:0,
   MapLatTarget:0
 };
 
-let AinitX = World.width*1.5 + 25;
-let AinitY = World.height *1.5 - 25;
+let AinitX = A.xPos;
+let AinitY = A.yPos;
 
 
 let hAVTchangePos = function (x,y) {
@@ -89,6 +93,16 @@ let hWRLDChangePos = function (x,y) {
 
 hWRLDChangePos(World.xPos,World.yPos);
 
+let loopWRLD = function(d) {
+
+  // switch (d) {
+  //   case "up":
+  //     WRLD.css("background-position", "0px -150px");
+  //   case "dn":
+  //     WRLD.css("background-position", "0px 150px");
+  // }
+}
+
 let slideWRLD = function(d) {
   console.log(d);
 
@@ -96,31 +110,53 @@ let slideWRLD = function(d) {
 
     case "up":
       World.slideV -= moveAmount;
+      console.log("slideV "+World.slideV);
+      //conditional here for
+      //looping behavior with .5 sec timeout
+      //store xpos, ypos, slide amt
+      if (World.slideV<0) {
+        World.slideV += 200;
+      }
+
       World.yPos = World.slideV;
       break;
 
     case "dn":
       World.slideV += moveAmount;
+      console.log("slideV "+World.slideV);
+
+      // if (World.slideV>=0) {
+      //   loopWRLD(d);
+      // }
+
       World.yPos = World.slideV;
       break;
 
     case "left":
       World.slideH -= moveAmount;
+      console.log("slideH "+World.slideH);
+
+
+
+
+
       World.xPos = World.slideH;
       break;
 
     case "right":
       World.slideH += moveAmount;
+      console.log("slideH "+World.slideH);
+
+
+
+
+
       World.xPos = World.slideH;
       break;
 
   }//end switch
 
 
-  // hWRLD.css({
-  //   "top": World.slideV,
-  //   "left": World.slideH
-  // });
   hWRLDChangePos(World.slideH,World.slideV);
 
 }// end slideWRLD

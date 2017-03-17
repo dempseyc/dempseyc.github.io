@@ -1,4 +1,4 @@
-<!DOCTYPE html>  <!--  cool style notes: spaces around classes, notice, other attributes have spaces only after assignment operator and between values  -->
+<!DOCTYPE html>
 <html>
 <head>
   <title>BAAD PLANET!!</title>
@@ -6,24 +6,41 @@
   <link rel= "stylesheet" type= "text/css" href= "style.css">
 </head>
   <body>
+    <div id= "displayarea" >
+      <div id= "mask">
 
-    <div id= "worldhandle" class= " handle ">
+        <div id= "whoffset">
+          <div id= "worldhandle" class= "handle trans">
 
-      <div id= "world">
+            <div id= "world">
+            </div>
+            <div id= "itemmap">
+            </div>
+            <div id= "atmosphere">
+            </div>
+
+          </div>  <!--  close worldhandle div  -->
+        </div>
+
+        <div id= "avatarhandle" class= "handle">
+          <div id= "avatarshadow" class= "shadow"></div>
+          <div id= "avatar" class= "hover wobble"></div>
+        </div>  <!--  close avatar handle div  -->
+
+      </div>  <!-- close mask div -->
+
+      <div id= "qcom">
       </div>
-      <div id= "itemmap">
+      <div id= "panel">
+        <!-- for example -->
+          <div class= "item"></div>
+          <div class= "item"></div>
+        <!-- for example
+        to append in script -->
       </div>
-      <div id= "atmosphere">
-      </div>
-    </div>  <!--  close worldhandle div  -->
 
-    <div id= "avatarhandle" class= " handle ">
-      <div id= "avatarshadow" class= " shadow "></div>
-      <div id= "avatar" class= " hover wobble "></div>
-    </div>  <!--  close avatar handle div  -->
+    </div> <!-- close display area -->
 
-    <div id= "mask" class= " static ">
-    </div>
 
     <script src= "jquery-1.11.3.js"></script>
     <script src= "scripttest2.js"></script>
