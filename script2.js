@@ -1,41 +1,43 @@
+//BAAD PLAANET!! BOARD0 PLAANT THAAT!! BOARD1 BAAD CAATS!! BOARD2 TAAKE THIS!!
+// BOARD3
+//
+//
+//
+//
+// craig ll dempsey style starts on line 11
+
 //initializing board
 //
-
 let B = {
-  mapSize: 10,
+  mapSize: 15,
   worldArray: [],
-  width: 500,//this.size*blockSize + maskborder/2, //150
-  height: 500,//this.size*blockSize, //150
-  imageSize: 1000,//this.size*blockSize+blockSize*2 + maskborder/2, //250
-  aLocX: 250,//this.width+(blockSize/2),
-  aLocY: 300, //this.width+(blockSize/2)+blockSize,
-  aVel: [0,0], //change in x, change in y
-  slideV: 0,  //initial position
-  slideH: 0,  //initial position
-}
+  width: 750,//this.size*blockSize + maskborder/2, //150
+  height: 750,//this.size*blockSize, //150
+  imageSize: 1250,//this.size*blockSize+blockSize*2 + maskborder/2, //250
+  aCoords: [7,8],
+  slideX: 0,  //initial position
+  slideY: 0,  //initial position
+  zeroedAx: 0,
+  zeroedAy: 0,
+};
 
-buildWorldArray = function () {
-
-  for (i=0;i<B.mapSize;i++){
-    let row = [];
-      for (j=0;j<B.mapSize;j++) {
-
-      let cell = {
-        idx: i+""+j,
-        avloc: false,
-        occ: false,
-        tokens: [],
-        land: true
-      };
-      row.push(cell);
-
-    }
-    B.worldArray.push(row);
-  }
-}
-
-buildWorldArray();
-console.log(B.worldArray);
+let landArray = [
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,1,1,1,1,1,1,0,0,0,0,0],
+[0,0,0,1,1,1,1,1,1,1,0,0,0,0,0],
+[0,0,1,1,1,1,1,1,1,1,0,0,0,0,0],
+[0,1,1,1,1,1,1,1,1,0,0,0,0,0,0],
+[0,1,1,0,0,1,1,1,1,0,0,0,1,1,0],
+[0,0,0,0,0,1,1,1,1,1,1,1,1,0,0],
+[0,0,0,0,0,1,1,1,1,1,1,1,1,0,0],
+[0,0,0,0,0,1,1,1,1,1,1,1,0,0,0],
+[0,0,0,0,1,1,1,1,1,1,1,1,1,0,0],
+[0,0,0,0,1,1,1,1,1,1,1,1,1,0,0],
+[0,0,0,0,1,1,1,1,1,1,1,1,1,1,0],
+[0,0,0,0,1,1,1,1,1,1,1,1,1,0,0],
+[0,0,0,0,0,1,1,1,1,1,1,1,0,0,0],
+[0,0,0,0,0,0,1,1,1,0,0,0,0,0,0],
+];
 
 
 let WRLD = $("#world");
@@ -49,28 +51,24 @@ let moveAmount = blockSize; ///10;
 
 //jqueryselections
 let AVT = $("#avatar");
+
+//a little hovering for this guy
+setInterval(function(){
+  AVT.toggleClass("hover");
+},1000);
+
 let hAVT = $("#avatarhandle");
 
 //if avt is stationary, only game response animations applied to these like sensor going off, getting a message, banking, hovering, blinking, whatever.  Let A have all the properties of location, items collected, etc.  easy to add features like money or board timeout or whatever logic
 
 let A = {
-  name: "playerName" ,
-  jq: AVT ,
-  handle: hAVT ,
-  // SHHimageURL: "images/PNGavS.png" ,
-  // TKNimageURL: "images/PNGavT.png" ,
-  // BLNKimageRL: "images/PNGavB.png" ,
-  xPos: 0,
-  yPos: 0,
-  MapLong: 0,
-  MapLat: 0,
-  MapLngTarget:0,
-  MapLatTarget:0
+  name: "playerName",
+  jq: AVT,
+  handle: hAVT,
+  coords: [7,8],   //init at (mapSize-1)/2 and ((mapSize-1)/2)+1
+  xPos: 375,  //coord * 50 + 25 //adds up
+  yPos: 425   //coord * 50 + 25 //adds up
 };
-
-let AinitX = A.xPos;
-let AinitY = A.yPos;
-
 
 let hAVTchangePos = function (x,y) {
   hAVT.css({
@@ -79,14 +77,17 @@ let hAVTchangePos = function (x,y) {
   });
 }
 
-hAVTchangePos(AinitX,AinitY);
+hAVTchangePos(B.slideX,B.slideY); //start at 0
 
 //put some global timers in,
 // 0.1 secs for avatar movement and css class changes
 // 0.5 secs for gamestate logic update
 // immediate dom append and remove manipulation and user feedback
-//with changing background-position
+// with changing background-position
 
+
+//might need to offset display of items by 25 to collide with avatar shadow.
+// looks like that on a grid
 
 let hWRLDChangePos = function (x,y) {
   hWRLD.css({
@@ -95,64 +96,75 @@ let hWRLDChangePos = function (x,y) {
   });
 }
 
-hWRLDChangePos(B.xPos,B.yPos);
+hWRLDChangePos(B.slideX,B.slideY);  //start at 0
 
 
 let slideWRLD = function(d) {
   console.log(d);
+  let prevX = B.zeroedAx;
+  let prevY = B.zeroedAy;
 
   switch (d) {
 
     case "up":
-      B.slideV -= moveAmount;
-      //console.log("slideV "+B.slideV);
+      B.slideY -= moveAmount;
+
+      // first things first get A to have an actual location
+
+      //everytime  is slide world the main function?
+      //do i want all the game logic in here?
+      //and all the display stuff?
+      //ok ill start this way
+
+
+
+      //check landArray move back to prev and break
+
+
+
+      //console.log("slideY "+B.slideY);
       //conditional here for
       //looping behavior with .5 sec timeout
       //store xpos, ypos, slide amt
-      if (B.slideV<-250) {
-        B.slideV += 500;  //size of planetmap
+      if (B.slideY<-350) {
+        B.slideY += 625; //half map image size
       }
-
-      B.yPos = B.slideV;
       break;
 
     case "dn":
-      B.slideV += moveAmount;
-      //console.log("slideV "+B.slideV);
+      B.slideY += moveAmount;
+      //console.log("slideY "+B.slideY);
 
-      if (B.slideV>250) {
-        B.slideV -= 500;  //size of planetmap
+      if (B.slideY>350) {
+        B.slideY -= 625;
       }
 
-      B.yPos = B.slideV;
       break;
 
     case "left":
-      B.slideH -= moveAmount;
-      // console.log("slideH "+B.slideH);
+      B.slideX -= moveAmount;
+      // console.log("slideX "+B.slideX);
 
-      if (B.slideH<-250) {
-        B.slideH += 500;  //size of planetmap
+      if (B.slideX<-350) {
+        B.slideX += 625;  //size of planetmap
       }
-
-      B.xPos = B.slideH;
       break;
 
     case "right":
-      B.slideH += moveAmount;
-      // console.log("slideH "+B.slideH);
+      B.slideX += moveAmount;
+      // console.log("slideX "+B.slideX);
 
-      if (B.slideH>250) {
-        B.slideH -= 500;  //size of planetmap
+      if (B.slideX>350) {
+        B.slideX -= 625;  //size of planetmap
       }
-
-      B.xPos = B.slideH;
       break;
 
   }//end switch
 
+  B.zeroedAx = B.slideX;
+  B.zeroedAy = B.slideY;
 
-  hWRLDChangePos(B.slideH,B.slideV);
+  hWRLDChangePos(B.zeroedAx,B.zeroedAy);
 
 }// end slideWRLD
 
@@ -180,7 +192,7 @@ $(document).keydown(function(e) {
         slideWRLD("up");
         break;
 
-        //need behavior for "/" or "X" key/
+        //need behavior for "/" or "_" key/
         //if A has no token selected, pick up token
         //if A has token selected, drop token
         //if A has no token selected, and no token to pick up,
@@ -193,44 +205,6 @@ $(document).keydown(function(e) {
 
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-fns = {
-
-  calculateTarget: function (x,y,Tx,Ty) {
-    let targetArr = [Tx,Ty];
-    //take those four values and return an [x,y] coordinate
-    //that makes sense to the caller of the A.calculateTarget method
-    //i think I'm on the right track
-    return targetArr
-  },
-
-  updateNextPos: function (xTarget, yTarget) {
-    this.nextX += 0.5*xTarget;
-    this.nextY += 0.5*yTarget;
-  },
-
-  moveMe: function () {
-    this.yPos += nextX;
-    this.xPos += nextY
-  }
-}
 
 
 

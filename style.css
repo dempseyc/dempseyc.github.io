@@ -39,7 +39,24 @@ body, html {
 
 #qcom p {
   line-height: 40px;
+  text-align: center;
   color: yellow;
+}
+
+#locator {
+  position: absolute;
+  background: transparent;
+  height: 50px;
+  width: 150px;
+  top: 0px;
+  right: 0px;
+
+}
+
+#locator p {
+  line-height: 32px;
+  text-align: center;
+  color: white;
 }
 
 #panel {
@@ -65,8 +82,8 @@ body, html {
 #whoffset {
   position: absolute;
   /*position should be scripted by imagesize of world*/
-  top: -225px;
-  left: -225px;
+  top: -325px;
+  left: -325px;
 }
 
 #worldhandle {
@@ -80,9 +97,9 @@ body, html {
 
 #world {
   position: absolute;
-  background: url("images/land500x2.png");
-  width: 1000px;
-  height: 1000px;
+  background: url("images/land750x2.png");
+  width: 1250px;
+  height: 1250px;
   background-size: cover;
 }
 
@@ -92,8 +109,8 @@ body, html {
   background-size: cover;
   position: absolute;
   border: solid 2px white;
-  width: 1000px;
-  height: 1000px;
+  width: 1250px;
+  height: 1250px;
   top: -1;
   left: -1;
   /*should be associated with an array of planetmapsize*2/blocksize*/
@@ -103,8 +120,8 @@ body, html {
   position: absolute;
   background-blend-mode: color-burn;
   background-color: rgba(110,20,20,0.7);
-  width: 1000px;
-  height: 1000px;
+  width: 1250px;
+  height: 1250px;
   background-size: cover;
 }
 
