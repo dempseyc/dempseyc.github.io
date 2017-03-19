@@ -5,6 +5,7 @@ body, html {
   background-size: cover;
   background-position: center;
   overflow: hidden;
+  font-family: 'Cousine', monospace;
 }
 
 #displayarea {
@@ -18,6 +19,7 @@ body, html {
 }
 
 #mask {
+  /*opacity: .5;*/
   position: absolute;
   background: transparent;
   width: 500px;
@@ -27,7 +29,7 @@ body, html {
   left: -500px;  /*add back in the offset 25 you want to minus the bordersize*/
 }
 
-#qcom {
+#q {
   position: absolute;
   background: blue;
   height: 75px;
@@ -37,10 +39,11 @@ body, html {
 
 }
 
-#qcom p {
+#q p {
   line-height: 40px;
   text-align: center;
   color: yellow;
+  /*signature: "#q/p>" ;*/
 }
 
 #locator {
@@ -97,7 +100,7 @@ body, html {
 
 #world {
   position: absolute;
-  background: url("images/land750x2.png");
+  background: url("images/land1250sillouette.png");
   width: 1250px;
   height: 1250px;
   background-size: cover;
@@ -105,12 +108,12 @@ body, html {
 
 #itemmap {
   opacity: 0.5;
-  background-color: rgba();
+  background-color: orange;
   background-size: cover;
   position: absolute;
   border: solid 2px white;
-  width: 1250px;
-  height: 1250px;
+  width: 1246px;
+  height: 1246px;  /*  mapSize-(borderpx*2) */
   top: -1;
   left: -1;
   /*should be associated with an array of planetmapsize*2/blocksize*/
