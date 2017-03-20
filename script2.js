@@ -21,12 +21,18 @@ $(document).ready(function () {
   //a little wobbling for this guy // give him class of wobble and do css keyfrm
 
   let TKMAP = $("#tokenmap");
+  let PAN = $("#panel");
+  let ITHAS = PAN.find("#items");
+  let POW = PAN.find("#powers");
+
+
 
   let LOC = $("#locator");
   let LOCp = LOC.find("p");
 
   let Q = $("#q");
   let Qp = Q.find("p");
+
 
 
 
@@ -47,7 +53,8 @@ $(document).ready(function () {
     zeroedAx: 0,
     zeroedAy: 0,
     tokArray: ["waterpower ","goal "],
-    tokLocArray: [[10,14],[2,12]]  //y/x?
+    tokLocArray: [[14,10],[12,2]],
+    TKMAPArray: []
   };
 
   let LandArray = [
@@ -100,22 +107,36 @@ $(document).ready(function () {
   let buildTKMAP = function () {
     console.log("buildTKMAP");
 
-    B.tokArray.forEach(function(item,i) {
-      let DIV = $("<div>");
-      DIV.addClass("token ");
-      DIV.addClass(item);
-      let loc = B.tokLocArray[i];
+    let DIV = $("<div>");
+    DIV.addClass("power waterpower ");
+    let loc = B.tokLocArray[0];
 
-      let xy = loc.map(function(coord,d){
-        coord *= 50; //blocksize
-        coord += 225; //offset?
-        return coord;
-      });  //keeps mapitem coords consistent with player coords, a little messy
+    let xy = loc.map(function(coord){
+      coord *= 50; //blocksize
+      coord += 225; //offset?
+      return coord;
+    });  //keeps mapitem coords consistent with player coords, a little messy
 
-      DIV.css("top",xy[0]+75);
-      DIV.css("left",xy[1]);
-      TKMAP.append(DIV);
-    });
+    DIV.css("top",xy[1]+75);
+    DIV.css("left",xy[0]);
+    TKMAP.append(DIV);
+    B.TKMAPArray.push(DIV);
+
+    //same again for goal
+    let DIV2 = $("<div>");
+    DIV2.addClass("goal ");
+    let loc2 = B.tokLocArray[1];
+
+    let xy2 = loc2.map(function(coord){
+      coord *= 50; //blocksize
+      coord += 225; //offset?
+      return coord;
+    });  //keeps mapitem coords consistent with player coords, a little messy
+
+    DIV2.css("top",xy2[1]+75);
+    DIV2.css("left",xy2[0]);
+    TKMAP.append(DIV2);
+    B.TKMAPArray.push(DIV2);
 
   }
 
@@ -127,13 +148,37 @@ $(document).ready(function () {
 // called when keydown is "/" or "x"
 
 let tokenAction = function () {
-  console.log("tokenAction!!");
 
+
+  //console.log("tokenAction!!");
+  for (i=0;i<B.tokLocArray.length;i++) {
+    console.log(A.coords.toString());
+    console.log(B.tokLocArray[0].toString());
+
+    if (A.coords.toString()===B.tokLocArray[i].toString()) {
+      console.log("token at this location");
+      let EL = B.TKMAPArray[i].detach();
+      EL.css({
+        top: "0px",
+        left: "0px",
+      })
+      POW.append(EL);
+      A.powers.push(B.tokArray[i]);
+    }
+  }
+
+  if (A.powers[1]==="goal ") {
+    alert("NOT BAAD!!");
+  }
+
+  // B.tokLocArray
+  // A.coords
+  //
   // if token with same coords as player exists, addchild to panel
-  // <div class= "token"></div>
+  //
   // and remove child from tokenmap
   // and A.powers.push(B.tokArray.shift()); //if a powerup
-  // or  A.panel.push(B.tokArray.shift()); //if a gametoken
+  // or  A.items.push(B.tokArray.shift()); //if a gametoken
   // Q reports token+"AADDED!!"
   // added token is defaulted to staged, none is an option for staging
   //

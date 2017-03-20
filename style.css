@@ -102,14 +102,22 @@ body, html {
 
 #panel {
   position: absolute;
+  background: #333;
+  width: 250px;
+  height: 500px;
+  top: 25px;
+  right: 25px;
+  /*in this case a 5 by 10 set of 50x50 divs item class*/
+}
+
+#items {
+  position: absolute;
   display: table;
   border: 1px solid orange;
   background: #333;
   width: 248px;
-  height: 498px;
-  top: 25px;
-  right: 25px;
-  /*in this case a 5 by 10 set of 50x50 divs item class*/
+  height: 248px;
+
 }
 
 .token {
@@ -119,6 +127,41 @@ body, html {
   border: 2px solid orange;
   height: 46px;
   width: 46px;
+}
+
+#powers {
+  position: absolute;
+  display: table;
+  border: 1px solid cyan;
+  background: #333;
+  width: 248px;
+  height: 248px;
+  top: 250px;
+}
+
+.power {
+  position: absolute;
+  background: white;
+  border: 2px solid cyan;
+  height: 46px;
+  width: 46px;
+}
+
+.waterpower {
+  position: absolute;
+  background: url("images/waterpower50x50.png");
+  border: 2px solid cyan;
+  height: 46px;
+  width: 46px;
+}
+
+.goal {
+  position: absolute;
+  background: url("images/goal50x50.png");
+  border: 2px solid yellow;
+  height: 46px;
+  width: 46px;
+
 }
 
 #atmosphere {
