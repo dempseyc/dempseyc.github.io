@@ -168,7 +168,7 @@ let tokenAction = function () {
   }
 
   if (A.powers[1]==="goal ") {
-    alert("NOT BAAD!!");
+    Qp.text("NOT BAAD!!");
   }
 
   // B.tokLocArray
