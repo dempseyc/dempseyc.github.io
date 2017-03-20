@@ -19,7 +19,6 @@ body, html {
 }
 
 #mask {
-  /*opacity: .5;*/
   position: absolute;
   background: transparent;
   width: 500px;
@@ -62,25 +61,6 @@ body, html {
   color: white;
 }
 
-#panel {
-  position: absolute;
-  display: table;
-  border: 1px solid orange;
-  background: #333;
-  width: 248px;
-  height: 498px;
-  top: 25px;
-  right: 25px;
-  /*in this case a 5 by 10 set of 50x50 divs item class*/
-}
-
-.item {
-  /*position: absolute;*/
-  display: inline-block;
-  border: 2px solid orange;
-  height: 46px;
-  width: 46px;
-}
 
 #whoffset {
   position: absolute;
@@ -103,12 +83,13 @@ body, html {
   background: url("images/land1250sillouette.png");
   width: 1250px;
   height: 1250px;
+  top: -50;
   background-size: cover;
 }
 
-#itemmap {
-  opacity: 0.5;
-  background-color: orange;
+#tokenmap {
+  opacity: 1;
+  background-color: rgba(220,220,10,0.2);
   background-size: cover;
   position: absolute;
   border: solid 2px white;
@@ -119,23 +100,45 @@ body, html {
   /*should be associated with an array of planetmapsize*2/blocksize*/
 }
 
+#panel {
+  position: absolute;
+  display: table;
+  border: 1px solid orange;
+  background: #333;
+  width: 248px;
+  height: 498px;
+  top: 25px;
+  right: 25px;
+  /*in this case a 5 by 10 set of 50x50 divs item class*/
+}
+
+.token {
+  /*position: absolute;*/
+  position: absolute;
+  background-color: white;
+  border: 2px solid orange;
+  height: 46px;
+  width: 46px;
+}
+
 #atmosphere {
   position: absolute;
   background-blend-mode: color-burn;
-  background-color: rgba(110,20,20,0.7);
+  background-color: rgba(110,20,110,0.7);
   width: 1250px;
   height: 1250px;
   background-size: cover;
 }
 
 #avhoffset {
-  /*  should be based on worldsize  */
-  /*  so that the shadow falls one block south of the center of the planetmap*/
+  /*  should be based on viewsize  */
+  /*  so that the shadow falls one block south of the centerblock in the view*/
   /*  is that really necessary to do rotations and whatnot?  */
   position: absolute;
+
   /*should be dynamic with imagesize of world*/
   top: 400px;
-  left: 275px;
+  left: 275px;  /*should be 250 but something else offsetting it*/
 }
 
 #avatarhandle {
@@ -167,6 +170,17 @@ body, html {
   opacity: .8;
 }
 
+@keyframes wobble {
+  0% {bottom: 0px;}
+  50% {bottom: 6px;}
+  100% {bottom: 0px;}
+}
+
+.wobble {
+  animation: wobble 1s infinite;
+}
+
+
 .trans {
 /*  transition-timing-function: linear;
   transition: top 1s, left 1s;*/
@@ -177,3 +191,4 @@ body, html {
   opacity: 0.4;
   background-blend-mode: multiply;
 }
+

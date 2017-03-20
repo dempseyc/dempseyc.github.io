@@ -2,7 +2,7 @@
   // Q uses "AA" syntax, meaning all a's or strings of a's, add an extra a, unless preceded by e i o or u
 $(document).ready(function () {
   // //first worry about water
-  // //then worry about items
+  // //then worry about tokens
   // craig ll dempsey starts on line 11
   //initializing display
   let blockSize = 50;
@@ -18,7 +18,9 @@ $(document).ready(function () {
   let AVT = $("#avatar");
   let hAVT = $("#avatarhandle");
 
-  let ITMAP = $()
+  //a little wobbling for this guy // give him class of wobble and do css keyfrm
+
+  let TKMAP = $("#tokenmap");
 
   let LOC = $("#locator");
   let LOCp = LOC.find("p");
@@ -26,10 +28,9 @@ $(document).ready(function () {
   let Q = $("#q");
   let Qp = Q.find("p");
 
-  //a little wobbling for this guy // give him class of wobble and do css keyfrm
 
 
-  //if avt is stationary, only game response animations applied to these like sensor going on, getting a message, banking, hovering, blinking, whatever.  Let A have all the properties of location, items collected, etc.  easy to add features like money or board timeout or whatever logic
+  //if avt is stationary, only game response animations applied to these like sensor going on, getting a message, banking, hovering, blinking, whatever.  Let A have all the properties of location, tokens token collected, etc.  easy to add features like money or board timeout or whatever logic
 
   //initializing board
   //
@@ -41,19 +42,20 @@ $(document).ready(function () {
     width: 750,//this.size*blockSize + maskborder/2, //150
     height: 750,//this.size*blockSize, //150
     imageSize: 1250,//this.size*blockSize+blockSize*2 + maskborder/2, //250
-    aCoords: [7,8],
     slideX: 0,  //initial position
     slideY: 0,  //initial position
     zeroedAx: 0,
     zeroedAy: 0,
+    tokArray: ["waterpower ","goal "],
+    tokLocArray: [[10,14],[2,12]]  //y/x?
   };
 
   let LandArray = [
   [0,0,0,0,0,1,1,1,1,1,1,0,0,0,0],
   [0,0,0,0,1,1,1,1,1,1,1,0,0,0,0],
-  [0,0,1,1,1,1,1,1,1,1,1,0,0,0,0],
+  [0,0,1,1,1,1,1,1,1,1,0,0,0,0,0],
   [0,1,1,1,1,1,1,1,1,1,0,0,0,0,0],
-  [0,1,1,1,1,1,1,1,1,1,0,0,1,1,1],
+  [0,1,1,1,1,1,1,1,1,1,0,0,0,1,1],
   [0,0,0,0,0,1,1,1,1,1,1,1,1,1,0],
   [0,0,0,0,0,1,1,1,1,1,1,1,1,1,0],
   [0,0,0,0,0,1,1,1,1,1,1,1,1,0,0],
@@ -66,6 +68,9 @@ $(document).ready(function () {
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
   ];
 
+  //A for Avatar
+  //
+
   let A = {
     name: "playerName",
     jq: AVT,
@@ -73,7 +78,8 @@ $(document).ready(function () {
     coords: [7,8],   //init at (mapSize-1)/2 and ((mapSize-1)/2)+1
     xPos: 375,  //this.coords[0] * blockSize + 25 //adds up
     yPos: 425,  //this.coords[1] * blockSize + 25 //adds up
-    panel: []
+    panel: [],
+    powers: []// ["seapower",]
   };
 
   LOCp.text("[X:"+A.coords[0]+", Y:"+A.coords[1]+"]");
@@ -87,41 +93,62 @@ $(document).ready(function () {
 
   hAVTchangePos(B.slideX,B.slideY); //start at 0
 
-
-
-    //getting item on map...  B contains a list of items with locations like [7,7]
-  //item map is populated with child divs and they are given css positions
+  // BUILD TOKEN MAP
   //
+  //B.tokArray === ["waterpower","goal"]
+
+  let buildTKMAP = function () {
+    console.log("buildTKMAP");
+
+    B.tokArray.forEach(function(item,i) {
+      let DIV = $("<div>");
+      DIV.addClass("token ");
+      DIV.addClass(item);
+      let loc = B.tokLocArray[i];
+
+      let xy = loc.map(function(coord,d){
+        coord *= 50; //blocksize
+        coord += 225; //offset?
+        return coord;
+      });  //keeps mapitem coords consistent with player coords, a little messy
+
+      DIV.css("top",xy[0]+75);
+      DIV.css("left",xy[1]);
+      TKMAP.append(DIV);
+    });
+
+  }
+
+  buildTKMAP();
 
 
-//
 ///////// token ACTION
 //
+// called when keydown is "/" or "x"
 
 let tokenAction = function () {
-
-
-
   console.log("tokenAction!!");
-  // if moveable token with same coords as player exists, addchild to panel
-  // <div class= "item"></div>
-  // and remove child from itemmap
 
-  // add array item to A.storagePANEL // Q reports item+"AADDED!!"
+  // if token with same coords as player exists, addchild to panel
+  // <div class= "token"></div>
+  // and remove child from tokenmap
+  // and A.powers.push(B.tokArray.shift()); //if a powerup
+  // or  A.panel.push(B.tokArray.shift()); //if a gametoken
+  // Q reports token+"AADDED!!"
+  // added token is defaulted to staged, none is an option for staging
+  //
 
-  // if item staged, drop item to item map at player coords
+  // if token staged, drop token to token map at player coords
 
-  // if nothing staged or present, enter panel menu, change behavior of arrow keys to select mode, and
+  // if nothing staged or present, enter panel menu, change behavior of arrow keys to select mode, and action keys to 'stage a token'
 }
 
 
 
 
 
-
-
-
-
+///////////////////////////
+//OTHERSTUFF
 
   //put some global timers in,
   // 0.1 secs for avatar movement and css class changes
@@ -130,7 +157,7 @@ let tokenAction = function () {
   // with changing background-position
 
 
-  //might need to offset display of items by 25 to collide with avatar shadow.
+  //might need to offset display of tokens by 25 to collide with avatar shadow.
   // looks like that on a grid
 
   let hWRLDchangePos = function (x,y) {
@@ -224,11 +251,12 @@ let tokenAction = function () {
     }//end switch
 
     //do some checks
-    //if A has no seapower
-    if (!LandArray[A.coords[1]][A.coords[0]]) {  //x and y flipped in landArr
-      B.slideX=prevX;
-      B.slideY=prevY;
-      A.coords=prevCoords;
+    if (A.powers.length===0) {
+      if (!LandArray[A.coords[1]][A.coords[0]]) {  //x and y flipped in landArr
+        B.slideX=prevX;
+        B.slideY=prevY;
+        A.coords=prevCoords;
+      }
     }
 
     B.zeroedAx = B.slideX;
