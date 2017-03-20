@@ -1,10 +1,7 @@
   //BAAD PLAANET!! BOARD0 TAAKE THAAT!! BOARD1 BAAD CAATS!! BOARD2 PLAANT THIS!!
-  // Q uses "AA" syntax, meaning all a's or strings of a's, add an extra a, unless preceded by e i o or u
+
 $(document).ready(function () {
-  // //first worry about water
-  // //then worry about tokens
-  // craig ll dempsey starts on line 11
-  //initializing display
+
   let blockSize = 50;
   let viewArea = 500; //not used in demo
   let moveAmount = blockSize; ///10;
@@ -18,7 +15,6 @@ $(document).ready(function () {
   let AVT = $("#avatar");
   let hAVT = $("#avatarhandle");
 
-  //a little wobbling for this guy // give him class of wobble and do css keyfrm
 
   let TKMAP = $("#tokenmap");
   let PAN = $("#panel");
@@ -26,17 +22,10 @@ $(document).ready(function () {
   let POW = PAN.find("#powers");
 
 
+  let LOCp = $("#locator").find("p");
 
-  let LOC = $("#locator");
-  let LOCp = LOC.find("p");
+  let Qp = $("#q").find("p");
 
-  let Q = $("#q");
-  let Qp = Q.find("p");
-
-
-
-
-  //if avt is stationary, only game response animations applied to these like sensor going on, getting a message, banking, hovering, blinking, whatever.  Let A have all the properties of location, tokens token collected, etc.  easy to add features like money or board timeout or whatever logic
 
   //initializing board
   //
@@ -54,7 +43,7 @@ $(document).ready(function () {
     zeroedAy: 0,
     tokArray: ["waterpower ","goal "],
     tokLocArray: [[14,10],[12,2]],
-    TKMAPArray: []
+    TKMAPArray: [] //tokens get pushed onto map here, get detached and reatached to DOM with this reference
   };
 
   let LandArray = [
@@ -164,6 +153,7 @@ let tokenAction = function () {
       })
       POW.append(EL);
       A.powers.push(B.tokArray[i]);
+      Qp.text("HAAS WAATERPOWER!!");
     }
   }
 

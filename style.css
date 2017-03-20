@@ -8,13 +8,21 @@ body, html {
   font-family: 'Cousine', monospace;
 }
 
+#title {
+  position: absolute;
+  background: grey;
+  color: yellow;
+  line-height: 40px;
+  font-size: 40px;
+}
+
 #displayarea {
   position: relative;
   background: grey;
   width: 900px;
   height: 700px;
   opacity: 0.8;
-  top: 75px;
+  top: 20px;
   left: 50px;
 }
 
@@ -178,7 +186,6 @@ body, html {
   /*  so that the shadow falls one block south of the centerblock in the view*/
   /*  is that really necessary to do rotations and whatnot?  */
   position: absolute;
-
   /*should be dynamic with imagesize of world*/
   top: 400px;
   left: 275px;  /*should be 250 but something else offsetting it*/
@@ -192,6 +199,8 @@ body, html {
   width: 7px;
   height: 7px;
   transition: top 1s, left 1s;
+  top: 425;
+  left: 375;
 }
 #avatarshadow {
   position: absolute;
