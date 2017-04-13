@@ -156,7 +156,7 @@ let tokenAction = function () {
     console.log(B.tokLocArray[0].toString());
 
     if (A.coords.toString()===B.tokLocArray[i].toString()) {
-      console.log("token at this location");
+      // console.log("token at this location");
       let EL = B.TKMAPArray[i].detach();
       EL.css({
         top: "0px",
@@ -164,6 +164,7 @@ let tokenAction = function () {
       })
       POW.append(EL);
       A.powers.push(B.tokArray[i]);
+      Qp.text("HAAS WAATERPOWER!!")
     }
   }
 
