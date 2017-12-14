@@ -25,6 +25,7 @@ body, html {
   opacity: 1;
   top: 50px;
   left: 50px;
+  overflow: hidden;
 }
 
 #mask {
