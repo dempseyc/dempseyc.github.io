@@ -1,146 +1,152 @@
-  //BAAD PLAANET!! BOARD0 TAAKE THAAT!! BOARD1 BAAD CAATS!! BOARD2 PLAANT THIS!!
-  // Q uses "AA" syntax, meaning all a's or strings of a's, add an extra a, unless preceded by e i o or u
-$(document).ready(function () {
-  // //first worry about water
-  // //then worry about tokens
-  // craig ll dempsey starts on line 11
-  //initializing display
-  let blockSize = 50;
-  let viewArea = 500; //not used in demo
-  let moveAmount = blockSize; ///10;
+//BAAD PLAANET!! BOARD0 TAAKE THAAT!! BOARD1 BAAD CAATS!! BOARD2 PLAANT THIS!!
 
-  //CAPS for DOM queries
-  //jqueryselections
-
-  let WRLD = $("#world");
-  let hWRLD = $("#worldhandle");
-
-  let AVT = $("#avatar");
-  let hAVT = $("#avatarhandle");
-
-  //a little wobbling for this guy // give him class of wobble and do css keyfrm
-
-  let TKMAP = $("#tokenmap");
-  let PAN = $("#panel");
-  let ITHAS = PAN.find("#items");
-  let POW = PAN.find("#powers");
+let viewArea = 500;
+let blockSize = 50;
+let worldSize = 750; // should inject
+let moveAmount = blockSize; ///10;
 
 
+let worldHandleOffset = (worldSize-viewArea)*0.5 - blockSize;
+//CAPS for DOM queries
+//jqueryselections
 
-  let LOC = $("#locator");
-  let LOCp = LOC.find("p");
+let WSQUARES = $(".worldsquare");
+let hWRLD = $("#worldhandle");
 
-  let Q = $("#q");
-  let Qp = Q.find("p");
+hWRLD.css({
+	"height": worldSize * 3,
+	"width": worldSize *3
+})
+
+WSQUARES.css({
+	"height": worldSize,
+	"width": worldSize
+})
+
+let hWRLDskip = $("#whoffset");
+
+hWRLDskip.css({
+	"top": -worldHandleOffset-worldSize,
+	"left": -worldHandleOffset-worldSize,
+})
+// add eventlistener transitionend if y = 14 or -1, remove trans class, reset postion, continue
+
+let AVT = $("#avatar");
+let hAVT = $("#avatarhandle");
+
+//a little wobbling for this guy // give him class of wobble and do css keyfrm
+
+let TKMAPS = $(".tokenmap");
+let PAN = $("#panel");
+let ITHAS = PAN.find("#items");
+let POW = PAN.find("#powers");
 
 
 
+let LOC = $("#locator");
+let LOCp = LOC.find("p");
 
-  //if avt is stationary, only game response animations applied to these like sensor going on, getting a message, banking, hovering, blinking, whatever.  Let A have all the properties of location, tokens token collected, etc.  easy to add features like money or board timeout or whatever logic
+let Q = $("#q");
+let Qp = Q.find("p");
 
-  //initializing board
-  //
-  //B for board
+//if avt is stationary, only game response animations applied to these like sensor going on, getting a message, banking, hovering, blinking, whatever.  Let A have all the properties of location, tokens token collected, etc.  easy to add features like money or board timeout or whatever logic
 
-  let B = {
-    mapSize: 15,
-    worldArray: [],
-    width: 750,//this.size*blockSize + maskborder/2, //150
-    height: 750,//this.size*blockSize, //150
-    imageSize: 1250,//this.size*blockSize+blockSize*2 + maskborder/2, //250
-    slideX: 0,  //initial position
-    slideY: 0,  //initial position
-    zeroedAx: 0,
-    zeroedAy: 0,
-    tokArray: ["waterpower ","goal "],
-    tokLocArray: [[14,10],[12,2]],
-    TKMAPArray: []
-  };
+//initializing board
+//
+//B for board
 
-  let LandArray = [
-  [0,0,0,0,0,1,1,1,1,1,1,0,0,0,0],
-  [0,0,0,0,1,1,1,1,1,1,1,0,0,0,0],
-  [0,0,1,1,1,1,1,1,1,1,0,0,0,0,0],
-  [0,1,1,1,1,1,1,1,1,1,0,0,0,0,0],
-  [0,1,1,1,1,1,1,1,1,1,0,0,0,1,1],
-  [0,0,0,0,0,1,1,1,1,1,1,1,1,1,0],
-  [0,0,0,0,0,1,1,1,1,1,1,1,1,1,0],
-  [0,0,0,0,0,1,1,1,1,1,1,1,1,0,0],
-  [0,0,0,0,1,1,1,1,1,1,1,1,1,1,0],
-  [0,0,0,0,1,1,1,1,1,1,1,1,1,1,0],
-  [0,0,0,0,1,1,1,1,1,1,1,1,1,1,1],
-  [0,0,0,0,1,1,1,1,1,1,1,1,1,1,0],
-  [0,0,0,0,0,1,1,1,1,1,1,1,1,0,0],
-  [0,0,0,0,0,0,1,1,1,1,1,0,0,0,0],
-  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-  ];
+let B = {
+	mapSize: worldSize/blockSize,
+	width: worldSize,
+	height: worldSize,
+	skipX: 0, //resets at breakpoint / crossing the mapborder / for looping array effect
+	skipY: 0, //resets at breakpoint / crossing the mapborder / for looping array effect
+	slideX: 0,  //initial position
+	slideY: 0,  //initial position
+	tokens: [
+		{"waterpower": {
+			"location": [7,8] ,
+			"TKMAPobjs": [],
+			}
+		},
+		{"goal": {
+			"location": [12,2] ,
+			"TKMAPobjs": [],
+			}
+		},
+	],
+};
 
-  //A for Avatar
-  //
+let LandArray = [
+[0,0,0,0,0,1,1,1,1,1,1,0,0,0,0],
+[0,0,0,0,1,1,1,1,1,1,1,0,0,0,0],
+[0,0,1,1,1,1,1,1,1,1,0,0,0,0,0],
+[0,1,1,1,1,1,1,1,1,1,0,0,0,0,0],
+[0,1,1,1,1,1,1,1,1,1,0,0,0,1,1],
+[0,0,0,0,0,1,1,1,1,1,1,1,1,1,0],
+[0,0,0,0,0,1,1,1,1,1,1,1,1,1,0],
+[0,0,0,0,0,1,1,1,1,1,1,1,1,0,0],
+[0,0,0,0,1,1,1,1,1,1,1,1,1,1,0],
+[0,0,0,0,1,1,1,1,1,1,1,1,1,1,0],
+[0,0,0,0,1,1,1,1,1,1,1,1,1,1,1],
+[0,0,0,0,1,1,1,1,1,1,1,1,1,1,0],
+[0,0,0,0,0,1,1,1,1,1,1,1,1,0,0],
+[0,0,0,0,0,0,1,1,1,1,1,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+];
 
-  let A = {
-    name: "playerName",
-    jq: AVT,
-    handle: hAVT,
-    coords: [7,8],   //init at (mapSize-1)/2 and ((mapSize-1)/2)+1
-    xPos: 375,  //this.coords[0] * blockSize + 25 //adds up
-    yPos: 425,  //this.coords[1] * blockSize + 25 //adds up
-    panel: [],
-    powers: []// ["seapower",]
-  };
+//A for Avatar
+//
 
-  LOCp.text("[X:"+A.coords[0]+", Y:"+A.coords[1]+"]");
+let A = {
+	name: "playerName",
+	jq: AVT,
+	handle: hAVT,
+	coords: [(B.mapSize-1)/2,((B.mapSize-1)/2)+1],
+	xPos: (B.mapSize-1)/2 * blockSize - worldHandleOffset, 
+	yPos: (((B.mapSize-1)/2)+1) * blockSize - worldHandleOffset, 
+	panel: [],
+	powers: []// ["seapower",]
+};
 
-  let hAVTchangePos = function (x,y) {
-    hAVT.css({
-      "left": x,
-      "top": y
-    });
-  }
 
-  hAVTchangePos(B.slideX,B.slideY); //start at 0
+LOCp.text("[X:"+A.coords[0]+", Y:"+A.coords[1]+"]");
 
-  // BUILD TOKEN MAP
-  //
-  //B.tokArray === ["waterpower","goal"]
+hAVT.css({
+"left": A.xPos,
+"top": A.yPos
+});
 
-  let buildTKMAP = function () {
-    console.log("buildTKMAP");
+// BUILD TOKEN MAP
+//
+//B.tokArray === ["waterpower","goal"]
 
-    let DIV = $("<div>");
-    DIV.addClass("power waterpower ");
-    let loc = B.tokLocArray[0];
+let buildTKMAPS = function (name,i) {
+	TKMAPS.each( function (j, obj) {
+		let DIV = $(`<div id="${name}-${j}">`);
+		DIV.addClass(`power ${name} `);
+		let loc = B.tokens[i][name].location;
+	
+		//// see what this does
+		let xy = loc.map(function(coord){
+			coord *= 50; //blocksize
+			// coord += 225; //offset?
+			return coord;
+		});  //keeps mapitem coords consistent with player coords, a little messy
+	
+		DIV.css({
+			"top": xy[1],
+			"left": xy[0]
+		});
+		$(obj).append(DIV);
+		B.tokens[i][name].TKMAPobjs.push(DIV);
+	});
+};
 
-    let xy = loc.map(function(coord){
-      coord *= 50; //blocksize
-      coord += 225; //offset?
-      return coord;
-    });  //keeps mapitem coords consistent with player coords, a little messy
-
-    DIV.css("top",xy[1]+75);
-    DIV.css("left",xy[0]);
-    TKMAP.append(DIV);
-    B.TKMAPArray.push(DIV);
-
-    //same again for goal
-    let DIV2 = $("<div>");
-    DIV2.addClass("goal ");
-    let loc2 = B.tokLocArray[1];
-
-    let xy2 = loc2.map(function(coord){
-      coord *= 50; //blocksize
-      coord += 225; //offset?
-      return coord;
-    });  //keeps mapitem coords consistent with player coords, a little messy
-
-    DIV2.css("top",xy2[1]+75);
-    DIV2.css("left",xy2[0]);
-    TKMAP.append(DIV2);
-    B.TKMAPArray.push(DIV2);
-
-  }
-
-  buildTKMAP();
+B.tokens.forEach(function (token,i) {
+	const name = Object.keys(token)[0];
+	buildTKMAPS(name,i);
+});
 
 
 ///////// token ACTION
@@ -148,45 +154,33 @@ $(document).ready(function () {
 // called when keydown is "/" or "x"
 
 let tokenAction = function () {
+	//console.log("tokenAction!!");
+	for (i=0;i<B.tokens.length;i++) {
+		let name = Object.keys(B.tokens[i])[0];
+		if (A.coords[0]===B.tokens[i][name].location[0] && A.coords[1]===B.tokens[i][name].location[1]) {
+		// console.log("token at this location");
+		// now have to do this
 
+		let EL;
+		B.tokens[i][name].TKMAPobjs.forEach(function(OBJ,i){
+			// console.log(OBJ);
+			EL = OBJ.detach();
+		})
+		// console.log(EL);
+		EL.css({
+			top: "0px",
+			left: "0px",
+		})
+		POW.append(EL);
+		A.powers.push(B.tokens[i]);
+		Qp.text("HAAS WAATERPOWER!!")
+		}
+	}
 
-  //console.log("tokenAction!!");
-  for (i=0;i<B.tokLocArray.length;i++) {
-    console.log(A.coords.toString());
-    console.log(B.tokLocArray[0].toString());
+	if (A.powers.length>1) {
+		Qp.text("NOT BAAD!!");
+	}
 
-    if (A.coords.toString()===B.tokLocArray[i].toString()) {
-      // console.log("token at this location");
-      let EL = B.TKMAPArray[i].detach();
-      EL.css({
-        top: "0px",
-        left: "0px",
-      })
-      POW.append(EL);
-      A.powers.push(B.tokArray[i]);
-      Qp.text("HAAS WAATERPOWER!!")
-    }
-  }
-
-  if (A.powers[1]==="goal ") {
-    Qp.text("NOT BAAD!!");
-  }
-
-  // B.tokLocArray
-  // A.coords
-  //
-  // if token with same coords as player exists, addchild to panel
-  //
-  // and remove child from tokenmap
-  // and A.powers.push(B.tokArray.shift()); //if a powerup
-  // or  A.items.push(B.tokArray.shift()); //if a gametoken
-  // Q reports token+"AADDED!!"
-  // added token is defaulted to staged, none is an option for staging
-  //
-
-  // if token staged, drop token to token map at player coords
-
-  // if nothing staged or present, enter panel menu, change behavior of arrow keys to select mode, and action keys to 'stage a token'
 }
 
 
@@ -194,124 +188,124 @@ let tokenAction = function () {
 
 
 ///////////////////////////
-//OTHERSTUFF
-
-  //put some global timers in,
-  // 0.1 secs for avatar movement and css class changes
-  // 0.5 secs for gamestate logic update
-  // immediate dom append and remove manipulation and user feedback
-  // with changing background-position
+//HANDLE MOVEMENT
 
 
-  //might need to offset display of tokens by 25 to collide with avatar shadow.
-  // looks like that on a grid
+const borderSkip = function (x,y) {
+	console.log('skipping',x,y);
+	hWRLDskip.css({
+		"left": x-worldHandleOffset-worldSize,
+		"top": y-worldHandleOffset-worldSize
+	})
+}
 
-  let hWRLDchangePos = function (x,y) {
-    hWRLD.css({
-      "left": x,
-      "top": y
-    });
-  }
+let hWRLDchangePos = function (x,y) {
+	console.log('slide',x,y)
+	console.log('skip',B.skipX,B.skipY);
+	hWRLD.css({
+	"left": -x,
+	"top": -y
+	});
+}
 
-  hWRLDchangePos(B.slideX,B.slideY);  //start at 0
-
-
-  let slideWRLD = function(d) {
-    console.log(d);
-    let prevX = B.zeroedAx;
-    let prevY = B.zeroedAy;
-    let prevCoords = A.coords.slice();
-
-    switch (d) {
-
-      case "up":
-        B.slideY -= moveAmount;
-        A.coords[1] += 1;
-
-        //everytime  is slide world the main function?
-        //do i want all the game logic in here?
-        //and all the display stuff?
-        //ok ill start this way
+hWRLDchangePos(B.slideX,B.slideY);  //start at 0
 
 
+let checkLandAndPowers = function (prevCoords) {
+	if (A.powers.length===0) { // not haas waterpower
+		if (!LandArray[A.coords[1]][A.coords[0]]) {  //x and y flipped in landArr
+			A.coords=prevCoords;
+			return false;
+		}
+		return true;
+	}
+	return true;
+}	//do some checks
 
-        //check LandArray move back to prev and break
+let slideWRLD = function(d) {
+
+	let xDir = 0;
+	let yDir = 0;
+
+	let prevX = B.slideX;
+	let prevY = B.slideY;
+	let prevCoords = A.coords.slice();
+	
+	switch (d) {
+		
+		case "up":
+			B.slideY -= moveAmount;
+			yDir = -1
+			A.coords[1] += yDir;
+			if (A.coords[1]<0) {
+				A.coords[1] = 14;
+			}
+		
+		break;
+		
+		case "dn":
+			B.slideY += moveAmount;
+			yDir = 1;
+			A.coords[1] += yDir;
+			if (A.coords[1]>14) {
+				A.coords[1] = 0;
+			}
+			break;
+
+		case "left":
+			B.slideX -= moveAmount;
+			xDir = -1
+			A.coords[0] += xDir;
+			if (A.coords[0]<0) {
+				A.coords[0] = 14;
+			}
+			
+			break;
+		
+		case "right":
+			B.slideX += moveAmount;
+			xDir = 1;
+			A.coords[0] += xDir;
+			if (A.coords[0]>14) {
+				A.coords[0] = 0;
+			}
+
+			break;
+
+		default:
+			break;
+
+	}//end switch
+
+	if (!checkLandAndPowers(prevCoords)) {
+		B.slideY = prevY;
+		xDir = 0;
+		B.slideX = prevX;
+		yDir = 0;
+	} else {
+		B.skipX += moveAmount*xDir;
+		B.skipY += moveAmount*yDir;
+
+		hWRLDchangePos(B.slideX,B.slideY);
+		/// works so far
+		// 350 means (worldSize-blockSize)*0.5  // 750 means worldSize
+
+		if (Math.abs(B.skipX)>700 || Math.abs(B.skipY)>700) {
+			// number of skips = 
+			let X = Math.trunc(B.slideX/750) * 750;
+			let Y = Math.trunc(B.slideY/750) * 750;
+			// let X = B.slideX*xDir+(350*xDir);
+			// let Y = B.slideY*yDir+(350*yDir);
+			borderSkip(X,Y);
+			B.skipX -= 750 * xDir;
+			B.skipY -= 750 * yDir;
+		}
+	}
+
+	LOCp.text("[X:"+A.coords[0]+", Y:"+A.coords[1]+"]");
 
 
-
-        //console.log("slideY "+B.slideY);
-        //conditional here for
-        //looping behavior with .5 sec timeout
-        //store xpos, ypos, slide amt
-        if (B.slideY<-350) {
-          B.slideY += 750; //half map image size
-        }
-        if (A.coords[1]>14) {
-          A.coords[1] = 0;
-        }
-
-        break;
-
-      case "dn":
-        B.slideY += moveAmount;
-        A.coords[1] -= 1;
-        //console.log("slideY "+B.slideY);
-
-        if (B.slideY>350) {
-          B.slideY -= 750;
-        }
-        if (A.coords[1]<0) {
-          A.coords[1] = 14;
-        }
-
-        break;
-
-      case "left":
-        B.slideX -= moveAmount;
-        A.coords[0] += 1;
-        // console.log("slideX "+B.slideX);
-
-        if (B.slideX<-350) {
-          B.slideX += 750;  //size of planetmap
-        }
-        if (A.coords[0]>14) {
-          A.coords[0] = 0;
-        }
-
-        break;
-
-      case "right":
-        B.slideX += moveAmount;
-        A.coords[0] -= 1;
-        // console.log("slideX "+B.slideX);
-
-        if (B.slideX>350) {
-          B.slideX -= 750;  //size of planetmap
-        }
-        if (A.coords[0]<0) {
-          A.coords[0] = 14;
-        }
-
-        break;
-
-    }//end switch
-
-    //do some checks
-    if (A.powers.length===0) {
-      if (!LandArray[A.coords[1]][A.coords[0]]) {  //x and y flipped in landArr
-        B.slideX=prevX;
-        B.slideY=prevY;
-        A.coords=prevCoords;
-      }
-    }
-
-    B.zeroedAx = B.slideX;
-    B.zeroedAy = B.slideY;
-    LOCp.text("[X:"+A.coords[0]+", Y:"+A.coords[1]+"]");
-
-    hWRLDchangePos(B.zeroedAx,B.zeroedAy);
-
-  }// end slideWRLD
+}// end slideWRLD
 
 
 // KEY EVENT STUFF
@@ -323,46 +317,115 @@ let tokenAction = function () {
 //   console.log(event.which);
 // });
 
+let stillPressed = false;
 
-  $(document).keydown(function(e) {
+let upKey = false;
+let downKey = false;
+let leftKey = false;
+let rightKey = false;
+let spaceOrSlashKey = false;
 
-    //alert(String.fromCharCode(e.keyCode));
-      switch(e.which) {
-          case 37: // left arrow
-            slideWRLD("right");
-            break;
+let transitionEndHandler = function (caller) {
+	if (stillPressed) {
+		let keyPriorities = [spaceOrSlashKey,upKey,downKey,leftKey,rightKey];
+		if (keyPriorities[0]) {
+		return tokenAction();
+		} else {
+		keyPriorities.forEach((sudlr, i)=>{
+			if (!sudlr) { return; }
+			if (i === 1) { return slideWRLD("up"); }
+			if (i === 2) { return slideWRLD("dn"); }
+			if (i === 3) { return slideWRLD("left"); }
+			if (i === 4) { return slideWRLD("right"); }
+		})
+		}
+	}
+}
 
-          case 38: // up arrow
-            slideWRLD("dn");
-            break;
+let keydownHandler = function (e) {
+	switch(e.which) {
+		case 37: // left arrow
+		e.preventDefault();
+		leftKey = true;
+		break;
+		
+		case 38: // up arrow
+		e.preventDefault();
+		upKey = true;
+		break;
+		
+		case 39: // right arrow
+		e.preventDefault();
+		rightKey = true;
+		break;
+		
+		case 40: // down arrow
+		e.preventDefault();
+		downKey = true;
+		break;
+		
+		case 88:
+		case 191:
+		e.preventDefault();
+		spaceOrSlashKey = true;
+		break;
 
-          case 39: // right arrow
-            slideWRLD("left");
-            break;
+		default:
+		break;
+		}
+	if (!stillPressed) {
+		stillPressed = true;
+		transitionEndHandler('keypress');
+	};
+	// return;
+}
 
-          case 40: // down arrow
-            slideWRLD("up");
-            break;
+let keyupHandler = function (e) {
+	switch(e.which) {
+		case 37: // left arrow
+		leftKey = false;
+		break;
+		
+		case 38: // up arrow
+		upKey = false;
+		break;
+		
+		case 39: // right arrow
+		rightKey = false;
+		break;
+		
+		case 40: // down arrow
+		downKey = false;
+		break;
+		
+		case 88:
+		case 191:
+		spaceOrSlashKey = false;
+		break;
 
-          case 88:
-          case 191:
-            tokenAction();
-            break;
-            //need behavior for "/" or "_" key/
-            //if A has no token selected, pick up token
-            //if A has token selected, drop token
-            //if A has no token selected, and no token to pick up,
-            //enter select token mode, and the arrow keys now have totally different behavior
+		default:
+		stillPressed = false;
+		break;
 
-          default: return; // exit this handler for other keys
-      }//end switch statement
+		}
 
-      e.preventDefault(); // prevent the default action (scroll / move caret)
+	stillPressed = false;
+	// return;
 
-  }); //document keydown function
+}
+
+$(document).keydown(keydownHandler);
+$(document).keyup(keyupHandler);
+
+hWRLD.on("transitionend", transitionEndHandler);
 
 
-}); //document ready function
+			//need behavior for "/" or "_" key/
+			//if A has no token selected, pick up token
+			//if A has token selected, drop token
+			//if A has no token selected, and no token to pick up,
+			//enter select token mode, and the arrow keys now have totally different behavior
+
 
 
 

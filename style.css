@@ -31,8 +31,8 @@ body, html {
 #mask {
   position: absolute;
   background: transparent;
-  width: 500px;
-  height: 500px;
+  width: 1550px;
+  height: 1550px;
   border: 525px solid black;
   top: -500px;   /*  25 - 375  */
   left: -500px;  /*add back in the offset 25 you want to minus the bordersize*/
@@ -68,46 +68,44 @@ body, html {
 #locator p {
   line-height: 32px;
   text-align: center;
-  color: white;
+  color: darkgreen;
 }
 
 
 #whoffset {
   position: absolute;
   /*position should be scripted by imagesize of world*/
-  top: -325px;
-  left: -325px;
 }
 
-#worldhandle {
+.worldhandle {
+  /* top, left, height, width set in js */
   position: absolute;
-  background-color: white;
-  border-left: solid 1px red;
-  border-top: solid 1px red;
-  width: 7px;
-  height: 7px;
+  background-color: purple;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
-#world {
-  position: absolute;
-  background: url("images/land1250sillouette.png");
-  width: 1250px;
-  height: 1250px;
-  top: -50;
+/* fills needed */
+.trans {
+  transition: top 1s, left 1s;
+  transition-timing-function: linear;
+}
+
+.worldsquare {
+  /* height, width set in js */
+  background: url("images/land750sillouette.png");
   background-size: cover;
 }
 
-#tokenmap {
+.tokenmap {
+  position: absolute;
+  width: 750px;
+  height: 750px;  /*  mapSize-*/
   opacity: 1;
   background-color: rgba(220,220,10,0.2);
   background-size: cover;
-  position: absolute;
-  border: solid 2px white;
-  width: 1246px;
-  height: 1246px;  /*  mapSize-(borderpx*2) */
-  top: -1;
-  left: -1;
-  /*should be associated with an array of planetmapsize*2/blocksize*/
+  /* border: solid 2px white; */
 }
 
 #panel {
@@ -135,8 +133,8 @@ body, html {
   position: absolute;
   background-color: white;
   border: 2px solid orange;
-  height: 46px;
-  width: 46px;
+  height: 50px;
+  width: 50px;
 }
 
 #powers {
@@ -153,24 +151,24 @@ body, html {
   position: absolute;
   background: white;
   border: 2px solid cyan;
-  height: 46px;
-  width: 46px;
+  height: 50px;
+  width: 50px;
 }
 
 .waterpower {
   position: absolute;
   background: url("images/waterpower50x50.png");
   border: 2px solid cyan;
-  height: 46px;
-  width: 46px;
+  height: 50px;
+  width: 50px;
 }
 
 .goal {
   position: absolute;
   background: url("images/goal50x50.png");
   border: 2px solid yellow;
-  height: 46px;
-  width: 46px;
+  height: 50px;
+  width: 50px;
 
 }
 
@@ -178,20 +176,9 @@ body, html {
   position: absolute;
   background-blend-mode: color-burn;
   background-color: rgba(110,20,110,0.7);
-  width: 1250px;
-  height: 1250px;
+  width: 100%;
+  height: 100%;
   background-size: cover;
-}
-
-#avhoffset {
-  /*  should be based on viewsize  */
-  /*  so that the shadow falls one block south of the centerblock in the view*/
-  /*  is that really necessary to do rotations and whatnot?  */
-  position: absolute;
-
-  /*should be dynamic with imagesize of world*/
-  top: 400px;
-  left: 275px;  /*should be 250 but something else offsetting it*/
 }
 
 #avatarhandle {
@@ -201,7 +188,7 @@ body, html {
   border-top: solid 1px blue;
   width: 7px;
   height: 7px;
-  transition: top 1s, left 1s;
+  /* transition: top 1s, left 1s; */
 }
 #avatarshadow {
   position: absolute;
@@ -217,7 +204,7 @@ body, html {
   background: url("images/shipToken50x100.png");
   background-size: cover;
   width:  50px;
-  height: 100px;
+  height: 70px;
   right:  -15px;
   bottom: 0px;
   opacity: .8;
@@ -231,13 +218,6 @@ body, html {
 
 .wobble {
   animation: wobble 1s infinite;
-}
-
-
-.trans {
-/*  transition-timing-function: linear;
-  transition: top 1s, left 1s;*/
-  /*worldhandle */
 }
 
 .shadow {

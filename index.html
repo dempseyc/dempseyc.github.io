@@ -2,57 +2,60 @@
 <html>
 <head>
   <title>BAAD PLAANET!!</title>
-  <link rel= "stylesheet" type= "text/css" href= "reset.css">
+  <link rel="stylesheet" type="text/css" href="CSSreset.css">
   <link href="https://fonts.googleapis.com/css?family=Cousine" rel="stylesheet">
-  <link rel= "stylesheet" type= "text/css" href= "style.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
   <body>
-    <div id= "title">BAAD PLAANET!!</div>
-    <div id= "displayarea" >
+    <div id="title">BAAD PLAANET!!</div>
+    <div id="displayarea" >
 
-        <div id= "whoffset">
-          <div id= "worldhandle" class= "handle trans">
+        <div id="whoffset">
+          <!-- <div id="wh-skip-border"> -->
 
-            <div id= "world">
-            </div>
-            <div id= "tokenmap">
-            </div>
-            <div id= "atmosphere">
-            </div>
-
-          </div>  <!--  close worldhandle div  -->
+            <div id="worldhandle" class="worldhandle trans">
+              <div class="worldsquare ws0"><div class="tokenmap"></div></div>
+              <div class="worldsquare ws1"><div class="tokenmap"></div></div>
+              <div class="worldsquare ws2"><div class="tokenmap"></div></div>
+              <div class="worldsquare ws3"><div class="tokenmap"></div></div>
+              <div class="worldsquare ws4"><div class="tokenmap"></div></div>
+              <div class="worldsquare ws5"><div class="tokenmap"></div></div>
+              <div class="worldsquare ws6"><div class="tokenmap"></div></div>
+              <div class="worldsquare ws7"><div class="tokenmap"></div></div>
+              <div class="worldsquare ws8"><div class="tokenmap"></div></div>
+              <div id= "atmosphere"></div>
+            </div>  <!--  close worldhandle div  -->
+          
+          <!-- </div> -->
         </div>
-
-        <div id= "avhoffset">
-          <div id= "avatarhandle" class= "handle">
-            <div id= "avatarshadow" class= "shadow"></div>
-            <div id= "avatar" class= "wobble"></div>
-          </div>  <!--  close avatar handle div  -->
-        </div>
-
-      <div id= "mask">
-        <div id= "locator">
+        
+        <div id="mask">
+        <div id="avatarhandle" class="handle">
+          <div id="avatarshadow" class="shadow"></div>
+          <div id="avatar" class="wobble"></div>
+        </div>  <!--  close avatar handle div  -->
+        <div id="locator">
         <p>[X,Y]</p>
         </div>
       </div>  <!-- close mask div -->
 
-      <div id= "q">
+      <div id="q">
         <!-- for example -->
         <p>TAAKE THAAT!!</br>
         USE ARROWS AND "/" key!!</p>
         <!-- for example
         to append in script -->
       </div>
-      <div id= "panel">
-        <div id= "items"></div>
-        <div id= "powers"></div>
+      <div id="panel">
+        <div id="items"></div>
+        <div id="powers"></div>
       </div>
 
     </div> <!-- close display area -->
 
 
-    <script src= "jquery-1.11.3.js"></script>
-    <script src= "script2.js"></script>
+    <script src="jquery-1.11.3.js"></script>
+    <script src="script2.js"></script>
   </body>
 </html>
 
