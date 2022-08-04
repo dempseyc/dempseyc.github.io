@@ -24,43 +24,6 @@ body, html {
   margin-left: calc(50vw - 178px);
 }
 
-#mask {
-  position: absolute;
-  left: 25px;
-  top: 25px;
-  width: 500px;
-  height: 500px;
-  box-shadow: 0 0 0 99999px rgba(0, 0, 0, .8);
-}
-
-#q {
-  position: relative;
-  background: transparent;
-}
-
-#q p {
-  line-height: 32px;
-  color: yellow;
-  /*signature: "#q/p>" ;*/
-}
-
-#locator {
-  position: absolute;
-  background: transparent;
-  height: 50px;
-  width: 150px;
-  top: 0px;
-  right: 0px;
-
-}
-
-#locator p {
-  line-height: 32px;
-  text-align: center;
-  color: darkgreen;
-}
-
-
 #whoffset {
   position: absolute;
   /*position should be scripted by imagesize of world*/
@@ -106,6 +69,98 @@ body, html {
   width: 50px;
 }
 
+#mask {
+  position: absolute;
+  left: 25px;
+  top: 25px;
+  width: 500px;
+  height: 500px;
+  box-shadow: 0 0 0 99999px rgba(0, 0, 0, .8);
+}
+
+#locator {
+  position: absolute;
+  background: transparent;
+  height: 50px;
+  width: 150px;
+  top: 0px;
+  right: 0px;
+
+}
+
+#locator p {
+  line-height: 32px;
+  text-align: center;
+  color: darkgreen;
+}
+
+#atmosphere {
+  position: absolute;
+  background-blend-mode: color-burn;
+  background-color: rgba(110,20,110,0.7);
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+}
+
+/* AVATAR */
+
+#avatarhandle {
+  position: absolute;
+  background-color: transparent;
+  border-left: solid 1px blue;
+  border-top: solid 1px blue;
+  width: 7px;
+  height: 7px;
+  /* transition: top 1s, left 1s; */
+}
+#avatarshadow {
+  position: absolute;
+  background: url("images/shipShadow50x50.png");
+  background-size: cover;
+  width:  50px;
+  height: 50px;
+  right:  -20px;
+  bottom: -10px;
+}
+
+#avatar {
+  position: absolute;
+  background: url("images/shipToken50x100.png");
+  background-size: cover;
+  width:  50px;
+  height: 70px;
+  right:  -15px;
+  bottom: 0px;
+  opacity: .8;
+}
+
+.wobble {
+  animation: wobble 1s infinite;
+}
+
+.shadow {
+  opacity: 0.4;
+  background-blend-mode: multiply;
+}
+
+@keyframes wobble {
+  0% {bottom: 0px;}
+  50% {bottom: 6px;}
+  100% {bottom: 0px;}
+}
+
+#q {
+  position: relative;
+  background: transparent;
+}
+
+#q p {
+  line-height: 32px;
+  color: yellow;
+  /*signature: "#q/p>" ;*/
+}
+
 #panel {
   position: relative;
   background: #333;
@@ -147,57 +202,109 @@ body, html {
 
 }
 
-#atmosphere {
-  position: absolute;
-  background-blend-mode: color-burn;
-  background-color: rgba(110,20,110,0.7);
-  width: 100%;
-  height: 100%;
-  background-size: cover;
+/* CONTROLS */
+/* variation on https://codepen.io/zackcreach/pen/veoxam */
+:root {
+  --color: rgb(0, 192, 250);
+  --hover: rgb(118, 223, 255);
+  --clicked: rgb(227, 248, 255);
+  --transition: all 0.2s linear;
 }
 
-#avatarhandle {
+#controls {
+  opacity: 0.5;
   position: absolute;
+  bottom: 25px;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.thumb {
+  display: flex;
+  height: 200px;
+  width: 200px;
+}
+
+.left-thumb {
+  flex-direction: column;
+}
+
+.right-thumb {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.arrow-button, .action-button {
   background-color: transparent;
-  border-left: solid 1px blue;
-  border-top: solid 1px blue;
-  width: 7px;
-  height: 7px;
-  /* transition: top 1s, left 1s; */
-}
-#avatarshadow {
-  position: absolute;
-  background: url("images/shipShadow50x50.png");
-  background-size: cover;
-  width:  50px;
-  height: 50px;
-  right:  -20px;
-  bottom: -10px;
-}
-#avatar {
-  position: absolute;
-  background: url("images/shipToken50x100.png");
-  background-size: cover;
-  width:  50px;
-  height: 70px;
-  right:  -15px;
-  bottom: 0px;
-  opacity: .8;
-}
-.wobble {
-  animation: wobble 1s infinite;
+  position: relative;
 }
 
-.shadow {
-  opacity: 0.4;
-  background-blend-mode: multiply;
+.arrow-button {
+  height: 50%;
+  width: 50%;
 }
 
-@keyframes wobble {
-  0% {bottom: 0px;}
-  50% {bottom: 6px;}
-  100% {bottom: 0px;}
+.action-button {
+  height: 50%;
+  width: 100%;
 }
+
+.up-button {
+  transform: rotate(225deg);
+}
+
+.down-button {
+  transform: rotate(45deg);
+}
+
+.left-button {
+  transform: rotate(135deg);
+}
+
+.right-button {
+  transform: rotate(315deg);
+}
+
+.arrow-line {
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  border-radius: 10px 0 0 10px;
+  transition: var(--transition);
+}
+
+.action-button>div , .arrow-button>div {
+  background: var(--color);
+}
+
+.action-button:hover>div , .arrow-button:hover>div {
+  background: var(--hover);
+}
+
+.action-button.clicked>div , .arrow-button.clicked>div {
+  background: var(--clicked);
+}
+
+.arrow-line__upper {
+  
+}
+
+.arrow-line__lower {
+  top: 50%;
+  left: 50%;
+  transform: rotate(90deg) translateY(0%);
+  transform-origin: top;
+}
+  
+.arrow-line__hor1 {
+  transform: translateY(-25%);
+  transform-origin: top;
+  border-radius: 10px 10px 0 0;
+
+}
+
 
 /* LAYOUT STUFF */
 
@@ -220,10 +327,6 @@ body, html {
   top: -175px;
 }
 
-#controls {
-  width: 100vw;
-}
-
 @media screen and (min-width:520px) {
   body, html {
     font-size: 25px;
@@ -238,17 +341,34 @@ body, html {
     transform-origin: 0 0;
     margin-left: auto;
   }
-  
+  .thumb {
+    transform: scale(50%);
+    transform-origin: center;
+  }
+
   #panel {
     width: 200px;
     height: 50px;
     top: -75px;
   }
-  
-  #controls {
-    width: 100vw;
-  }
   #locator p {
     font-size: 16px;
     line-height: 25px;
+}
+
+@media screen and (max-height:420px) {
+  #title {
+    display: none;
+  }
+  #displayarea {
+    transform: scale(0.65);
+    transform-origin: 0 0;
+    margin-left: calc(50vw - 178px);
+  }
+  #panel {
+    opacity: 0.7;
+    width: 200px;
+    height: 50px;
+    top: -325px;
+  }
 }

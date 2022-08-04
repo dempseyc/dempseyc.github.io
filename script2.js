@@ -308,12 +308,21 @@ let slideWRLD = function(d) {
 
 // KEY EVENT STUFF
 
-// copied template from
-// http://stackoverflow.com/questions/1402698/binding-arrow-keys-in-js-jquery
+/// CONTROLS
 
-// document.addEventListener("keydown", function(event) {
-//   console.log(event.which);
-// });
+// on-screen buttons
+let UP = $('.up-button');
+let DOWN = $('.down-button');
+let LEFT = $('.left-button');
+let RIGHT = $('.right-button');
+let ACTION = $('.action-button');
+
+let lightBUTTON = function (BUTTON) {
+	BUTTON.addClass('clicked');
+}
+let offBUTTON = function (BUTTON) {
+	BUTTON.removeClass('clicked');
+}
 
 let stillPressed = false;
 
@@ -345,27 +354,32 @@ let keydownHandler = function (e) {
 		case 37: // left arrow
 		e.preventDefault();
 		leftKey = true;
+		lightBUTTON(LEFT);
 		break;
 		
 		case 38: // up arrow
 		e.preventDefault();
 		upKey = true;
+		lightBUTTON(UP);
 		break;
 		
 		case 39: // right arrow
 		e.preventDefault();
 		rightKey = true;
+		lightBUTTON(RIGHT);
 		break;
 		
 		case 40: // down arrow
 		e.preventDefault();
 		downKey = true;
+		lightBUTTON(DOWN);
 		break;
 		
 		case 88:
 		case 191:
 		e.preventDefault();
 		spaceOrSlashKey = true;
+		lightBUTTON(ACTION);
 		break;
 
 		default:
@@ -382,23 +396,28 @@ let keyupHandler = function (e) {
 	switch(e.which) {
 		case 37: // left arrow
 		leftKey = false;
+		offBUTTON(LEFT);
 		break;
 		
 		case 38: // up arrow
 		upKey = false;
+		offBUTTON(UP);
 		break;
 		
 		case 39: // right arrow
 		rightKey = false;
+		offBUTTON(RIGHT);
 		break;
 		
 		case 40: // down arrow
 		downKey = false;
+		offBUTTON(DOWN);
 		break;
 		
 		case 88:
 		case 191:
 		spaceOrSlashKey = false;
+		offBUTTON(ACTION);
 		break;
 
 		default:
@@ -411,6 +430,37 @@ let keyupHandler = function (e) {
 	// return;
 
 }
+
+LEFT.mousedown(function () {
+	keydownHandler({which: 37, preventDefault: function() {return null;}})
+});
+LEFT.mouseup(function () {
+	keyupHandler({which: 37})
+})
+UP.mousedown(function () {
+	keydownHandler({which: 38, preventDefault: function() {return null;}})
+});
+UP.mouseup(function () {
+	keyupHandler({which: 38})
+})
+RIGHT.mousedown(function () {
+	keydownHandler({which: 39, preventDefault: function() {return null;}})
+});
+RIGHT.mouseup(function () {
+	keyupHandler({which: 39})
+})
+DOWN.mousedown(function () {
+	keydownHandler({which: 40, preventDefault: function() {return null;}})
+});
+DOWN.mouseup(function () {
+	keyupHandler({which: 40})
+})
+ACTION.mousedown(function () {
+	keydownHandler({which: 88, preventDefault: function() {return null;}})
+});
+ACTION.mouseup(function () {
+	keyupHandler({which: 88})
+})
 
 $(document).keydown(keydownHandler);
 $(document).keyup(keyupHandler);
