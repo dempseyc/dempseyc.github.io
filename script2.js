@@ -37,9 +37,7 @@ let hAVT = $("#avatarhandle");
 //a little wobbling for this guy // give him class of wobble and do css keyfrm
 
 let TKMAPS = $(".tokenmap");
-let PAN = $("#panel");
-let ITHAS = PAN.find("#items");
-let POW = PAN.find("#powers");
+let INV = $("#inventory");
 
 
 
@@ -171,7 +169,7 @@ let tokenAction = function () {
 			top: "0px",
 			left: "0px",
 		})
-		POW.append(EL);
+		INV.append(EL);
 		A.powers.push(B.tokens[i]);
 		Qp.text("HAAS WAATERPOWER!!")
 		}

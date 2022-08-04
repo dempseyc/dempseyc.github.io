@@ -2,55 +2,44 @@ body, html {
   width: 100%; height: 100%;
   margin: 0;
   background: black;
-  background-size: cover;
-  background-position: center;
   overflow: hidden;
   font-family: 'Cousine', monospace;
+  text-align: center;
 }
 
 #title {
-  position: fixed;
   color: yellow;
-  font-size: 64px;
+  font-size: 2em;
   z-index: 30;
-  margin-left: 30px;
-  margin-bottom: 30px;
 }
 
 #displayarea {
   position: relative;
   background: grey;
-  width: 900px;
-  height: 700px;
+  width: 550px;
+  height: 550px;
+  margin: auto;
   opacity: 1;
-  top: 50px;
-  left: 50px;
   overflow: hidden;
+  margin-left: calc(50vw - 178px);
 }
 
 #mask {
   position: absolute;
-  background: transparent;
-  width: 1550px;
-  height: 1550px;
-  border: 525px solid black;
-  top: -500px;   /*  25 - 375  */
-  left: -500px;  /*add back in the offset 25 you want to minus the bordersize*/
+  left: 25px;
+  top: 25px;
+  width: 500px;
+  height: 500px;
+  box-shadow: 0 0 0 99999px rgba(0, 0, 0, .8);
 }
 
 #q {
-  position: absolute;
-  background: blue;
-  height: 75px;
-  width: 500px;
-  top: 525px;
-  left: 25px;
-
+  position: relative;
+  background: transparent;
 }
 
 #q p {
   line-height: 32px;
-  text-align: center;
   color: yellow;
   /*signature: "#q/p>" ;*/
 }
@@ -108,26 +97,6 @@ body, html {
   /* border: solid 2px white; */
 }
 
-#panel {
-  position: absolute;
-  background: #333;
-  width: 250px;
-  height: 500px;
-  top: 25px;
-  right: 25px;
-  /*in this case a 5 by 10 set of 50x50 divs item class*/
-}
-
-#items {
-  position: absolute;
-  display: table;
-  border: 1px solid orange;
-  background: #333;
-  width: 248px;
-  height: 248px;
-
-}
-
 .token {
   /*position: absolute;*/
   position: absolute;
@@ -137,14 +106,20 @@ body, html {
   width: 50px;
 }
 
-#powers {
+#panel {
+  position: relative;
+  background: #333;
+  margin: auto;
+}
+
+#inventory {
   position: absolute;
-  display: table;
+  display: flex;
+  flex-direction: row;
   border: 1px solid cyan;
   background: #333;
-  width: 248px;
-  height: 248px;
-  top: 250px;
+  width: 100%;
+  height: 100%;
 }
 
 .power {
@@ -209,13 +184,6 @@ body, html {
   bottom: 0px;
   opacity: .8;
 }
-
-@keyframes wobble {
-  0% {bottom: 0px;}
-  50% {bottom: 6px;}
-  100% {bottom: 0px;}
-}
-
 .wobble {
   animation: wobble 1s infinite;
 }
@@ -225,3 +193,62 @@ body, html {
   background-blend-mode: multiply;
 }
 
+@keyframes wobble {
+  0% {bottom: 0px;}
+  50% {bottom: 6px;}
+  100% {bottom: 0px;}
+}
+
+/* LAYOUT STUFF */
+
+body, html {
+  font-size: 15px;
+}
+
+#q {
+  top: -175px;
+}
+
+#displayarea {
+  transform: scale(0.65);
+  transform-origin: 0 0;
+}
+
+#panel {
+  width: 200px;
+  height: 50px;
+  top: -175px;
+}
+
+#controls {
+  width: 100vw;
+}
+
+@media screen and (min-width:520px) {
+  body, html {
+    font-size: 25px;
+  }
+  
+  #q {
+    top: -125px;
+  }
+  
+  #displayarea {
+    transform: scale(1);
+    transform-origin: 0 0;
+    margin-left: auto;
+  }
+  
+  #panel {
+    width: 200px;
+    height: 50px;
+    top: -75px;
+  }
+  
+  #controls {
+    width: 100vw;
+  }
+  #locator p {
+    font-size: 16px;
+    line-height: 25px;
+}
